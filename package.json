@@ -1,0 +1,21 @@
+{
+  "name": "cedarvilleconnection",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib"
+  },
+  "scripts": {
+    "build": "npm run build:css",
+    "build:css": "tailwind build src/main/resources/static/config/tailwind.css -o src/main/resources/static/css/tailwind.css",
+    "dev": "concurrently \"npm:watch-css\"",
+    "watch-css": "onchange -i src/main/resources/static/css -- npm run build:css"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "concurrently": "^5.1.0",
+    "onchange": "^6.1.0",
+    "tailwindcss": "^1.2.0"
+  }
+}
