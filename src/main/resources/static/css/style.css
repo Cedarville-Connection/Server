@@ -1,3 +1,25 @@
-html {
-	background-color: red;
+.theme-light {
+    --bg-background-primary: #007EBA;
+    --bg-background-secondary: white;
+    --bg-background-ternary: #e2e8f0;
+
+    --bg-primary-complement: #0AB568;
+    --bg-primary-chromatic: #14588F;
+
+    --text-copy-primary: rgb(29, 29, 29);
+    --text-copy-secondary: rgb(145, 145, 145);
+    --text-copy-ternary: white;
+
+}
+.theme-dark {
+    --bg-background-primary: #071e3d;
+    --bg-background-secondary: #1d4d77;
+    --bg-background-ternary: #278ea5;
+
+    --bg-primary-complement: #2AF598;
+    --bg-primary-chromatic: #278ea5;
+
+    --text-copy-primary: #cbd5e0;
+    --text-copy-secondary: white;
+    --text-copy-ternary: #fff;
 }

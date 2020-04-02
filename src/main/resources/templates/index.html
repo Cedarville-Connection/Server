@@ -13,8 +13,8 @@
 		
         <title>Home page</title>
     </head>
-    <body>
-        <p class="bg-blue-400">
+    <body class="theme-light">
+        <p class="bg-primary">
         <span th:text="'Today is: ' + ${#dates.format(#dates.createNow(), 'dd MMM yyyy HH:mm')}" th:remove="tag"></span>
         </p>
     </body>
