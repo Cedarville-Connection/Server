@@ -14430,6 +14430,21 @@ video {
   transition-duration: 1000ms;
 }
 
+.button-secondary {
+  flex-shrink: 0;
+  font-size: 0.875rem;
+  color: var(--text-copy-primary);
+  font-weight: 700;
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  border-width: 1px;
+  border-bottom-width: 2px;
+  border-color: var(--bg-background-secondary);
+  border-radius: 0.25rem;
+}
+
 @media (min-width: 640px) {
   .sm\:sr-only {
     position: absolute;
