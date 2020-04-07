@@ -1,7 +1,7 @@
 .theme-light {
-    --bg-background-primary: #007EBA;
-    --bg-background-secondary: white;
-    --bg-background-ternary: #e2e8f0;
+    --bg-background-primary: #e9ebee;
+    --bg-background-secondary: #278ea5;
+    --bg-background-ternary: #ffffff;
 
     --bg-primary-complement: #0AB568;
     --bg-primary-chromatic: #14588F;
@@ -22,4 +22,13 @@
     --text-copy-primary: #cbd5e0;
     --text-copy-secondary: white;
     --text-copy-ternary: #fff;
+}
+
+
+html, body, body > div#body-wrapper {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-background-primary);
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
 }
