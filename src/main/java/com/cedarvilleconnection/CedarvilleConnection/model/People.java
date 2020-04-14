@@ -20,82 +20,91 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 @Table(name = "people")
 @EntityListeners(AuditingEntityListener.class)
 public class People {
-    private long id;
-    private String firstName;
-    private String lastName;
-    private String profilePic;
-    private String address;
-    private String email;
-    private int gender;
-    private Date date;
+	private long id;
 
-    @Id
-    //TODO: MAY NOT NEED TO GENERATE HERE
-    public long getId(){
-        return id;
-    }
-    public void setId(long id){
-        this.id = id;
-    }
+	@Column(name = "first_name", nullable = false)
+	private String first_name;
 
-    @Column(name = "first_name", nullable = false)
-    public String getFirstName(){
-        return firstName;
-    }
-    public void setFirstName(String firstName){
-        this.firstName = firstName;
-    }
+	@Column(name = "last_name", nullable = false)
+	private String last_name;
 
-    @Column(name = "last_name", nullable = false)
-    public String getLastName() {
-        return lastName;
-    }
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
-    }
+	private String profilePic;
+	private String address;
+	private String email;
+	private int gender;
+	private Date date;
 
-    @Column(name = "email", nullable = false)
-    public String getEmailId() {
-        return email;
-    }
-    public void setEmailId(String email) {
-        this.email = email;
-    }
+	@Id
+	// TODO: MAY NOT NEED TO GENERATE HERE
+	public long getId() {
+		return id;
+	}
 
-    @Column(name = "profile_pic", nullable = false)
-    public String getProfilePic() {
-        return profilePic;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
-    }
+//    @Column(name = "first_name", nullable = false)
+	public String getFirst_name() {
+		return first_name;
+	}
 
-    @Column(name = "address", nullable = false)
-    public String getAddress() {
-        return address;
-    }
+	public void setFirst_name(String firstName) {
+		this.first_name = firstName;
+	}
 
-    public void setAddress(String address) {
-        this.address = address;
-    }
+//    @Column(name = "last_name", nullable = false)
+	public String getLast_name() {
+		return last_name;
+	}
 
-    @Column(name = "gender", nullable = false)
-    public int getGender() {
-        return gender;
-    }
+	public void setLast_name(String lastName) {
+		this.last_name = lastName;
+	}
 
-    public void setGender(int gender) {
-        this.gender = gender;
-    }
+	@Column(name = "email", nullable = false)
+	public String getEmail() {
+		return email;
+	}
 
-    @Column(name = "dob", nullable = false)
-    public Date getDate() {
-        return date;
-    }
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	@Column(name = "profile_pic", nullable = false)
+	public String getProfile_pic() {
+		return profilePic;
+	}
+
+	public void setProfile_pic(String profilePic) {
+		this.profilePic = profilePic;
+	}
+
+	@Column(name = "address", nullable = false)
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	@Column(name = "gender", nullable = false)
+	public int getGender() {
+		return gender;
+	}
+
+	public void setGender(int gender) {
+		this.gender = gender;
+	}
+
+	@Column(name = "dob", nullable = false)
+	public Date getDate() {
+		return date;
+	}
+
+	public void setDate(Date date) {
+		this.date = date;
+	}
 
 }
