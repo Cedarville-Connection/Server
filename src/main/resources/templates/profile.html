@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+    <head th:replace="template :: header"></head>
+<body class="theme-light">
+    <div id="body-wrapper">
+    
+    	<nav th:replace="template :: navbar"></nav>
+    
+    	<div class="h-64 rounded-xl relative">
+			<img class="h-full w-full lg:w-2/3 mx-auto object-cover" th:src="@{https://picsum.photos/900/300/?random&t={time}(time=1)}">
+			<img class="absolute h-40 w-40 rounded-full shadow" style="top: 50%; right: calc(50% - 5rem);" th:src="${user.profile_pic}">
+		</div>
+		<div>
+			<div class="mt-8">
+				<div>
+					<h1 class="text-3xl text-center font-semibold"><span th:text="${user.first_name}">First</span> <span th:text="${user.last_name}">Last</span></h1>
+			    </div>
+			    <div class="flex flex-row justify-center text-gray-600">
+			    	<p class="mt-0 m-2 text-sm font-bold">Followers <span>10</span></p>
+			    	<p class="mt-0 m-2 text-sm font-bold">Following <span>12</span></p>
+			    </div>
+			    <div class="flex flex-col justify-center">
+			    	<h2 class="text-xl text-center font-bold">Information</h2>
+			    	<div class="flex flex-col w-auto mx-auto">
+			    		<p class="font-bold">Date of Birth: <span class="font-normal" th:text="${user.date}"></span></p>
+			    		<p class="font-bold">Gender: <span class="font-normal" th:switch="${user.gender}">
+							<span th:case="'0'">Female</span>
+							<span th:case="'1'">Male</span>
+						</span></p>
+			    	</div>
+			    </div>
+			    
+			    <p>ADD POST TEMPLATE</p>
+			    
+			    
+			</div>
+		</div>
+     </div>  
+</body>
+</html>

@@ -4,14 +4,17 @@
     <head th:replace="template :: header"></head>
 <body class="theme-light">
     <div id="body-wrapper">
-        <h3 class="text-center w-full text-3xl font-bold">People Search</h3>
-        <form th:object="${people}" method="post">
+    
+    	<nav th:replace="template :: navbar"></nav>
+    
+        <h3 class="text-center w-full text-3xl font-bold">Search Results</h3>
+        <!-- <form th:object="${people}" method="post">
             <div>
                 <label for="subject">Subject: </label>
                 <input type="text" name="userId" th:value="${peopleSearch}">
                 <input type="submit" value="Search">
             </div>
-        </form>
+        </form> -->
 
         <!-- <table>
             <tr>
