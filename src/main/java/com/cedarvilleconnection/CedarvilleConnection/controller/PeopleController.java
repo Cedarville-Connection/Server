@@ -6,8 +6,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import javax.validation.Valid;
 
+import org.apache.lucene.search.Query;
+import org.hibernate.search.jpa.FullTextEntityManager;
+import org.hibernate.search.jpa.Search;
+import org.hibernate.search.query.dsl.QueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
@@ -56,8 +63,46 @@ public class PeopleController {
 		} catch (ResourceNotFoundException e) {
 			e.printStackTrace();
 		}
-		List<People> people = new ArrayList<People>();
-		people.add(user);
+		
+		List<People> people;
+		if(user != null) {
+			people = new ArrayList<People>();
+			people.add(user);
+		} else {
+			// It was an invalid search probably null userId
+			people = getAllUsers();
+		}
+    	
+//    	EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("PERSISTENCE");
+//        EntityManager entityManager = entityManagerFactory.createEntityManager();
+//
+//    	
+//    	
+//    	FullTextEntityManager fullTextEntityManager = Search.getFullTextEntityManager(entityManager);
+//    	try {
+//			fullTextEntityManager.createIndexer().startAndWait();
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		}
+//    	 
+//    	QueryBuilder queryBuilder = fullTextEntityManager.getSearchFactory() 
+//    	  .buildQueryBuilder()
+//    	  .forEntity(People.class)
+//    	  .get();
+//    	
+//    	Query luceneQuery = queryBuilder
+//    		    .keyword()
+//    		    .fuzzy()
+//    		    .withPrefixLength( 1 )
+//    		    .onField("first_name")
+//    		    .matching("Aubrey")
+//    		    .createQuery();
+//    	
+//    	org.hibernate.search.jpa.FullTextQuery jpaQuery
+//    	  = fullTextEntityManager.createFullTextQuery(luceneQuery, People.class);
+//    	
+//    	List<People> results = jpaQuery.getResultList();
+    	
         mav.addObject("people", people);
         return mav;
     }
@@ -68,11 +113,17 @@ public class PeopleController {
     }
 
     @GetMapping("/people/{id}")
-    public ResponseEntity<People> getPeopleById(
+    public ModelAndView getPeopleById(
             @PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
+    	
+    	ModelAndView mav = new ModelAndView("profile");
+    	
         People user = peopleRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found on :: "+ userId));
-        return ResponseEntity.ok().body(user);
+                .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
+//        return ResponseEntity.ok().body(user);
+        
+        mav.addObject("user", user);
+        return mav;
     }
 
     @PostMapping("/people")
