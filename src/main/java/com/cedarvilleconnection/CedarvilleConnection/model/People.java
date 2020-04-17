@@ -35,7 +35,6 @@ public class People {
 	private Date date;
 
 	@Id
-	// TODO: MAY NOT NEED TO GENERATE HERE
 	public long getId() {
 		return id;
 	}
