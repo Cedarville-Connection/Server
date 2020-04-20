@@ -5,20 +5,17 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
+import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 @Entity
 @Table(name = "people")
 @EntityListeners(AuditingEntityListener.class)
+@NamedQuery(name = "People.findByName", query = "SELECT p FROM People p "
+		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
 public class People {
 	private long id;
 
@@ -43,7 +40,6 @@ public class People {
 		this.id = id;
 	}
 
-//    @Column(name = "first_name", nullable = false)
 	public String getFirst_name() {
 		return first_name;
 	}
@@ -52,7 +48,6 @@ public class People {
 		this.first_name = firstName;
 	}
 
-//    @Column(name = "last_name", nullable = false)
 	public String getLast_name() {
 		return last_name;
 	}

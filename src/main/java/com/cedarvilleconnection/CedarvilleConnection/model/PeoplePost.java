@@ -8,14 +8,14 @@ import javax.persistence.Table;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-@Entity
+@Entity(name = "PeoplePost")
 @Table(name = "people_post")
 @EntityListeners(AuditingEntityListener.class)
 public class PeoplePost {
 
     private long userId;
     private long postId;
-
+    
     @Id
     @Column(name = "user_id", nullable = false)
     public long getUserId() {

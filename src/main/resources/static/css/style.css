@@ -40,9 +40,25 @@ html, body, body > div#body-wrapper {
 
 
 
-
-
-
+.commentBox {
+    max-height: 0px;
+    -webkit-transition: max-height, 0.5s ease-in-out;
+    -moz-transition: max-height, 0.5s ease-in-out;
+    -ms-transition: max-height, 0.5s ease-in-out;
+    -o-transition: max-height, 0.5s ease-in-out;
+    transition: max-height, 0.5s ease-in-out;
+}
+.commentBox.open {
+	max-height: 800px;
+}
+.commentBox textarea {
+	max-height: 200px;
+	min-height: 30px;
+}
+.commentBox .commentList {
+	max-height: 500px;
+	overflow-y: scroll;
+}
 
 
 

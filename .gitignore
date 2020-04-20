@@ -1,3 +1,6 @@
+# MacOS Cruft
+.DS_Store
+
 # Remove NPM
 node
 node_modules
