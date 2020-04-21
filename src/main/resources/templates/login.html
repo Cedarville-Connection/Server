@@ -2,19 +2,56 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link th:href="@{/css/tailwind.css}" rel="stylesheet"/>
+
+    <title>Log In | Cedarville Connection</title>
 </head>
-<body>
-    <div th:if="${param.error}">
-        Invalid username and password.
+<body class="flex flex-col items-center h-full p-20">
+    <header class="flex flex-row flex-no-wrap font-black text-2xl text-gray-900 tracking-wide">
+        the <span class="text-yellow-500 px-1">Cedarville</span><span class="text-blue-500">Connection</span>
+    </header>
+    <div th:if="${param.error}" class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative">
+        <strong class="font-bold">Whoops</strong>
+        <span class="block sm:inline">We didn't recognize that username and password. Try again?</span>
     </div>
     <div th:if="${param.logout}">
-        You have been logged out.
+        <strong class="font-bold">See ya!</strong>
+        <span class="block sm:inline">You have been logged out</span>
     </div>
-    <form th:action="@{/login}" method="post">
-        <div><label> User Name : <input type="text" name="username"/> </label></div>
-        <div><label> Password: <input type="password" name="password"/> </label></div>
-        <div><input type="submit" value="Sign In"/></div>
-    </form>
+    <div id="forms" class="flex flex-wrap px-4 max-w-2xl">
+        <div id="register" class="w-full sm:w-1/2 px-4">
+            <form th:action="@{/register}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email" modelAttribute="email">Email</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password">
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="button">
+                    <i class="fas fa-user-plus"></i>
+                    Register
+                </button>
+            </form>
+        </div>
+        <div id="login" class="w-full sm:w-1/2 px-4">
+            <form th:action="@{/login}" method="post" class="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4">
+                <div class="mb-4">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="email" modelAttribute="email">Email</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="email" type="email" placeholder="Email">
+                </div>
+                <div class="mb-6">
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="password">Password</label>
+                    <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" id="password" type="password" placeholder="Password">
+                </div>
+                <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+                    <i class="fas fa-sign-in-alt"></i>
+                    Sign In
+                </button>
+            </form>
+        </div>
+    </div>
 </body>
 </html>
