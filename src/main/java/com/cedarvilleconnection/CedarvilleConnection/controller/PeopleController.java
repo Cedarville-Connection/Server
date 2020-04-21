@@ -23,7 +23,6 @@ import com.cedarvilleconnection.CedarvilleConnection.model.People;
 import com.cedarvilleconnection.CedarvilleConnection.repository.PeopleRepository;
 
 @RestController
-@RequestMapping("/")
 public class PeopleController {
     @Autowired
     private PeopleRepository peopleRepository;
