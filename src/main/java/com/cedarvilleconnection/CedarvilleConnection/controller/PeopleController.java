@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cedarvilleconnection.CedarvilleConnection.exception.ResourceNotFoundException;
 import com.cedarvilleconnection.CedarvilleConnection.model.People;
 import com.cedarvilleconnection.CedarvilleConnection.repository.PeopleRepository;
 
@@ -56,12 +55,11 @@ public class PeopleController {
 
     @GetMapping("/people/{id}")
     public ModelAndView getPeopleById(
-            @PathVariable(value = "id") Long userId) throws ResourceNotFoundException {
+            @PathVariable(value = "id") Long userId) {
     	
     	ModelAndView mav = new ModelAndView("profile");
     	
-        People user = peopleRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found on :: " + userId));
+        People user = peopleRepository.findById(userId).get();
 //        return ResponseEntity.ok().body(user);
         
         mav.addObject("user", user);
@@ -76,9 +74,8 @@ public class PeopleController {
     @PutMapping("/people/{id}")
     public ResponseEntity<People> updateUser(
             @PathVariable(value = "id") Long userId,
-            @Valid @RequestBody People personDetails) throws ResourceNotFoundException {
-        People person = peopleRepository.findById(userId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found on :: "+ userId));
+            @Valid @RequestBody People personDetails) {
+        People person = peopleRepository.findById(userId).get();
 
         person.setEmail(personDetails.getEmail());
         person.setLast_name(personDetails.getLast_name());
@@ -95,8 +92,7 @@ public class PeopleController {
     @DeleteMapping("/people/{id}")
     public Map<String, Boolean> deleteUser(
             @PathVariable(value = "id") Long personId) throws Exception {
-        People person = peopleRepository.findById(personId)
-                .orElseThrow(() -> new ResourceNotFoundException("User not found on :: "+ personId));
+        People person = peopleRepository.findById(personId).get();
 
         peopleRepository.delete(person);
         Map<String, Boolean> response = new HashMap<>();

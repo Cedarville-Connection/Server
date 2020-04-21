@@ -1,5 +1,7 @@
 package com.cedarvilleconnection.CedarvilleConnection.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
@@ -16,7 +18,7 @@ public class Post {
 
     private People user;
     @ManyToOne
-    @JoinColumn(name="user_id", nullable = false)
+    @JoinColumn(foreignKey=@ForeignKey(name="user_id"))
     public People getUser() {
         return user;
     }
@@ -24,6 +26,26 @@ public class Post {
     public void setUser(People user) {
         this.user = user;
     }
+    
+    
+    
+    private List<Comment> comments;
+    
+	public void addComment(Comment comment) {
+		this.comments.add(comment);
+	}
+
+	public void removePost(Comment comment) {
+		this.comments.remove(comment);
+	}
+	
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+	public List<Comment> getComments() {
+		return comments;
+	}
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
+	}
 
 
     @Id

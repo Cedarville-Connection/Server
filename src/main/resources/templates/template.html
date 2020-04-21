@@ -80,4 +80,68 @@
     			</div>
     		</div>
     	</nav>
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	<div th:fragment="posts" th:each="post : ${posts}" class="my-4 bg-white shadow-xl rounded-lg overflow-hidden">
+	                    <div class="p-4 pb-0 flex w-full items-center">
+	                    	<img th:src="${post.user.profile_pic}" class="mr-4 w-12 rounded-full"/>
+	                    	<div class="flex flex-col">
+								<p class="text-xl text-gray-900"><span th:text="${post.user.first_name}">First</span> <span th:text="${post.user.last_name}">Last</span></p>
+								<span class="text-secondaryText text-xs">8 minutes ago</span>
+							</div>
+	                    </div>
+	                    <div class="p-4 pt-0 flex flex-wrap break-words w-full">
+	                    	<p class="text-sm" th:text="${post.content}">Post Content</p>
+	                    </div>
+	                    <div class="h-1 w-11/12 border-t border-gray-300 mx-auto"></div>
+	                    <div class="flex justify-center items-center p-2 text-secondaryText font-bold text-sm select-none">
+	                        <div class="mx-12 flex items-center cursor-pointer">
+	                        	<span>203</span>
+	                            <i class="fa fa-thumbs-o-up ml-1 mr-2" aria-hidden="true"></i>
+								<span>Like</span>
+	                        </div>
+							<div class="commentButton flex items-center cursor-pointer">
+	                            <i class="fa fa-commenting-o mr-2" aria-hidden="true"></i>
+								<span>Comments</span>
+	                        </div>
+							<div class="mx-12 flex items-center cursor-pointer">
+	                            <i class="fa fa-share-square-o mr-2" aria-hidden="true"></i>
+								<span>Share</span>
+	                        </div>
+	                    </div>
+	                    <div class="commentBox">
+	                    	<div class="commentList flex flex-col">
+		                    	<div th:each="comment : ${post.comments}" class="px-4 py-2">
+			                    	<a href="#" class="flex w-full items-center">
+				                    	<img th:src="${comment.user.profile_pic}" class="mr-4 w-12 rounded-full"/>
+				                    	<span class="text-sm text-gray-900 font-bold">
+				                    		<span th:text="${comment.user.first_name}">First</span> <span th:text="${comment.user.last_name}">Last</span>
+				                    		<span class="text-secondaryText font-normal">8 minutes ago</span>
+				                    	</span>
+			                    	</a>
+				                    <div class="flex flex-wrap break-words w-full">
+				                    	<p th:text="${comment.contents}" class="text-sm">Comment Content</p>
+				                    </div>
+		                    	</div>
+	                    	</div>
+	                    	
+	                    	<div>
+	                    		<form method="POST" action="/comment" class="p-2">
+	                    			<div class="flex flex-row flex-1 p-1 my-auto">
+					    				<textarea type="text" name="comment" placeholder="Comment Text" class="flex-1 focus:outline-none"></textarea>
+				    				</div>
+				    				<input th:name="postId" th:value="${post.id}" hidden/>
+				    				<button type="submit" class="rounded bg-primary w-full py-1 flex justify-center focus:outline-none">Comment</button>
+	                    		</form>
+	                    	</div>
+	                    </div>
+	                </div>
+    	
+    	
+    	
 </html>

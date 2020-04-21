@@ -1,16 +1,27 @@
 package com.cedarvilleconnection.CedarvilleConnection.model;
 
 import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.cedarvilleconnection.CedarvilleConnection.model.Post;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "people")
+@JsonIgnoreProperties({"posts"})
 @EntityListeners(AuditingEntityListener.class)
 @NamedQuery(name = "People.findByName", query = "SELECT p FROM People p "
 		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
@@ -29,15 +40,23 @@ public class People {
 	private int gender;
 	private Date date;
 
-	private Set<Post> post;
+	
 
-	@OneToMany(mappedBy = "user")
-	public Set<Post> getPost() {
-		return post;
+	private List<Post> posts;
+//	public void addPost(Post post) {
+//		this.posts.add(post);
+//	}
+//
+//	public void removePost(Post post) {
+//		this.posts.remove(post);
+//	}
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	public List<Post> getPosts() {
+		return this.posts;
 	}
-
-	public void setPost(Set<Post> post) {
-		this.post = post;
+	
+	public void setPosts(List<Post> posts) {
+		this.posts = posts;
 	}
 
 
