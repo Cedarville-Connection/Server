@@ -1,15 +1,13 @@
 package com.cedarvilleconnection.CedarvilleConnection.model;
 
 import java.util.Date;
+import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.cedarvilleconnection.CedarvilleConnection.model.Post;
 
 @Entity
 @Table(name = "people")
@@ -30,6 +28,18 @@ public class People {
 	private String email;
 	private int gender;
 	private Date date;
+
+	private Set<Post> post;
+
+	@OneToMany(mappedBy = "user")
+	public Set<Post> getPost() {
+		return post;
+	}
+
+	public void setPost(Set<Post> post) {
+		this.post = post;
+	}
+
 
 	@Id
 	public long getId() {
@@ -100,5 +110,6 @@ public class People {
 	public void setDate(Date date) {
 		this.date = date;
 	}
-
 }
+
+

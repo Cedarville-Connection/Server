@@ -1,12 +1,9 @@
 package com.cedarvilleconnection.CedarvilleConnection.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import com.cedarvilleconnection.CedarvilleConnection.model.People;
 
 @Entity
 @Table(name = "post")
@@ -15,6 +12,19 @@ public class Post {
 
     private long id;
     private String content;
+
+
+    private People user;
+    @ManyToOne
+    @JoinColumn(name="user_id", nullable = false)
+    public People getUser() {
+        return user;
+    }
+
+    public void setUser(People user) {
+        this.user = user;
+    }
+
 
     @Id
     @Column(name = "id", nullable = false)
@@ -33,4 +43,7 @@ public class Post {
     public void setContent(String content){
         this.content = content;
     }
+
+
+
 }
