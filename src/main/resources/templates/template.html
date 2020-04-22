@@ -91,10 +91,10 @@
     	<div th:fragment="posts" th:each="post : ${posts}" class="my-4 bg-white shadow-xl rounded-lg overflow-hidden">
 	                    <div class="p-4 pb-0 flex w-full items-center">
 	                    	<img th:src="${post.user.profile_pic}" class="mr-4 w-12 rounded-full"/>
-	                    	<div class="flex flex-col">
-								<p class="text-xl text-gray-900"><span th:text="${post.user.first_name}">First</span> <span th:text="${post.user.last_name}">Last</span></p>
-								<span class="text-secondaryText text-xs">8 minutes ago</span>
-							</div>
+	                    	<a th:href="@{/people/{id}(id=${post.user.id})}" class="flex flex-col">
+								<span class="text-xl text-gray-900"><span th:text="${post.user.first_name}">First</span> <span th:text="${post.user.last_name}">Last</span></span>
+								<span class="text-secondaryText text-xs" th:text="${post.prettyTime}">8 minutes ago</span>
+							</a>
 	                    </div>
 	                    <div class="p-4 pt-0 flex flex-wrap break-words w-full">
 	                    	<p class="text-sm" th:text="${post.content}">Post Content</p>
@@ -118,11 +118,11 @@
 	                    <div class="commentBox">
 	                    	<div class="commentList flex flex-col">
 		                    	<div th:each="comment : ${post.comments}" class="px-4 py-2">
-			                    	<a href="#" class="flex w-full items-center">
+			                    	<a th:href="@{/people/{id}(id=${comment.user.id})}" class="flex w-full items-center">
 				                    	<img th:src="${comment.user.profile_pic}" class="mr-4 w-12 rounded-full"/>
 				                    	<span class="text-sm text-gray-900 font-bold">
 				                    		<span th:text="${comment.user.first_name}">First</span> <span th:text="${comment.user.last_name}">Last</span>
-				                    		<span class="text-secondaryText font-normal">8 minutes ago</span>
+				                    		<span class="text-secondaryText font-normal" th:text="${comment.prettyTime}">8 minutes ago</span>
 				                    	</span>
 			                    	</a>
 				                    <div class="flex flex-wrap break-words w-full">

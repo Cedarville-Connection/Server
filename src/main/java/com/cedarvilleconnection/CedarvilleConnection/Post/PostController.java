@@ -1,6 +1,8 @@
 package com.cedarvilleconnection.CedarvilleConnection.Post;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,21 +45,28 @@ public class PostController {
     
     @PostMapping("/comment")
     public ModelAndView comment(@RequestParam("comment") String contents, @RequestParam("postId") long postId) {
-		Comment comment = new Comment();
-		comment.setPost(postRepository.findById(postId).get());
-		comment.setUser(peopleRepository.findById((long) 1).get()); // FIXME: change to current user
-		comment.setContents(contents);
-		commentRepository.save(comment);
+    	
+    	if(contents != null && !contents.trim().isEmpty()) {
+			Comment comment = new Comment();
+			comment.setPost(postRepository.findById(postId).get());
+			comment.setUser(peopleRepository.findById((long) 1).get()); // FIXME: change to current user
+			comment.setTimestamp(new Timestamp(new Date().getTime()));
+			comment.setContents(contents);
+			commentRepository.save(comment);
+    	}
 		return index();
     }
     
     @PostMapping("/post")
     public ModelAndView comment(@RequestParam("postContents") String content) {
-    	Post post = new Post();
-    	post.setComments(new ArrayList<Comment>());
-    	post.setContent(content);
-    	post.setUser(peopleRepository.findById((long) 1).get()); // FIXME: change to current user
-    	postRepository.save(post);
+    	if(content != null && !content.trim().isEmpty()) {
+	    	Post post = new Post();
+	    	post.setComments(new ArrayList<Comment>());
+	    	post.setContent(content);
+	    	post.setTimestamp(new Timestamp(new Date().getTime()));
+	    	post.setUser(peopleRepository.findById((long) 1).get()); // FIXME: change to current user
+	    	postRepository.save(post);
+    	}
 		return index();
     }
 

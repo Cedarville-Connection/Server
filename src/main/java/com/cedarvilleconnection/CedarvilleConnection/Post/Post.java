@@ -31,7 +31,10 @@ public class Post {
 	}
     
 	public void setTimestamp(Timestamp timestamp) {
-		this.pt = new PrettyTime(getESTDate()).format(timestamp);
+		try {
+			this.pt = new PrettyTime(getESTDate()).format(timestamp);
+		} catch(Exception e) {
+		}
 		this.timestamp = timestamp;
 	}
 	

@@ -69,7 +69,7 @@ public class Comment {
 		this.contents = newContents;
 	}
 	
-    private Timestamp timestamp;
+    private Timestamp timestamp = Timestamp.from(Instant.now());
     private String pt;
 
     @Column(name = "timestamp")
@@ -79,7 +79,10 @@ public class Comment {
    
 	public void setTimestamp(Timestamp timestamp) {
 		
-		this.pt = new PrettyTime(getESTDate()).format(timestamp);
+		try {
+			this.pt = new PrettyTime(getESTDate()).format(timestamp);
+		} catch(Exception e) {
+		}
 		this.timestamp = timestamp;
 	}
 	
