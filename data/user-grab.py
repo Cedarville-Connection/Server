@@ -26,7 +26,15 @@ def export_to_mysql(db, table, username, password, values):
         cur = conn.cursor()
 
         logging.info(f"Inserting users into {table}")
-        cur.executemany(f"""insert into {table} ({", ".join(values.keys())}) values (%s, %s....)""", values)
+        for user in values:
+            user_loc = user["location"]
+            addr = f"{user_loc['street']['number']} {user_loc['street']['name']} {user_loc['city']} {user_loc['state']}, {user_loc['postcode']} {user_loc['country']}"
+            insert_vals = (addr, user["dob"]["date"], user["email"], user["name"]["first"],
+                           user["name"]["last"], user["gender"], user["picture"]["medium"])
+            cur.execute(
+                f"""insert into `{table}` (`address`, `dob`, `email`, `first_name`, `last_name`, `gender`, `profile_pic`) values (%s, %s, %s, %s, %s, %s, %s)""",
+                values
+            )
 
         logging.info("Closing connection to DB")
         conn.close()
@@ -38,6 +46,7 @@ def export_to_mysql(db, table, username, password, values):
             conn.close()
 
     logging.info("MySQL interaction complete")
+
 
 def main(args):
     # Retrieve data from RandomUser.me
@@ -59,7 +68,7 @@ def main(args):
     if result.status_code != requests.codes.ok:
         logging.error("Failed to complete request")
         return 1
-    
+
     # Extract only the fields we want
     extracted = []
     logging.info(f"Received response from API with {result.json()['info']['results']} results")
@@ -71,7 +80,7 @@ def main(args):
     logging.info(f"Succesfully extracted {len(extracted)} results")
 
     if args.mysql:
-        export_to_mysql(args.db, args.table, args.user, args.password)
+        export_to_mysql(args.db, args.table, args.user, args.password, extracted)
 
     logging.info("Dumping local copy of JSON to dump.json")
     with open("dump.json", 'w') as f:
@@ -79,14 +88,19 @@ def main(args):
 
     logging.info("Extraction complete")
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="randomuser.me extractor")
-    parser.add_argument("--number", '-n', type=int, default=5, help="Number of users to retrieve (default 5, maximum of 5000)")
+    parser.add_argument("--number", '-n', type=int, default=5,
+                        help="Number of users to retrieve (default 5, maximum of 5000)")
     parser.add_argument("--seed", type=str, help="Seed for API to generate same results each time")
-    parser.add_argument("--dry", action="store_true", default=False, help="Run without making request to user generator")
+    parser.add_argument("--dry", action="store_true", default=False,
+                        help="Run without making request to user generator")
 
-    sql_group = parser.add_argument_group("MySQL", "Arguments related to MySQL exporting. Passing --mysql requires all of these as well")
-    sql_group.add_argument("--mysql", action="store_true", default=False, help="Indicate the extracted data should be stored in a MySQL instance")
+    sql_group = parser.add_argument_group(
+        "MySQL", "Arguments related to MySQL exporting. Passing --mysql requires all of these as well")
+    sql_group.add_argument("--mysql", action="store_true", default=False,
+                           help="Indicate the extracted data should be stored in a MySQL instance")
     sql_group.add_argument("--user", '-u', help="MySQL user to login as for export")
     sql_group.add_argument("--pass", '-p', dest="password", help="MySQL password to login with")
     sql_group.add_argument("--db", help="MySQL Database to store data in")
