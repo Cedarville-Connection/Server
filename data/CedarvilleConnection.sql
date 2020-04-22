@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:3306
--- Generation Time: Apr 06, 2020 at 05:19 PM
+-- Generation Time: Apr 22, 2020 at 10:30 AM
 -- Server version: 5.7.29-0ubuntu0.18.04.1
 -- PHP Version: 7.2.24-0ubuntu0.18.04.3
 
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `CedarvilleConnection`
+-- Database: `cu_connect`
 --
 
 -- --------------------------------------------------------
@@ -28,7 +28,10 @@ SET time_zone = "+00:00";
 
 CREATE TABLE `comment` (
   `id` int(10) UNSIGNED NOT NULL,
-  `comment_word` int(11) NOT NULL
+  `contents` int(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `post_id` int(11) NOT NULL,
+  `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -111,35 +114,14 @@ CREATE TABLE `people` (
 -- --------------------------------------------------------
 
 --
--- Table structure for table `people_post`
---
-
-CREATE TABLE `people_post` (
-  `user_id` int(10) UNSIGNED NOT NULL,
-  `post_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
--- Table structure for table `people_post_comment`
---
-
-CREATE TABLE `people_post_comment` (
-  `comment_user_id` int(10) UNSIGNED NOT NULL,
-  `comment_id` int(10) UNSIGNED NOT NULL,
-  `post_id` int(10) UNSIGNED NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `post`
 --
 
 CREATE TABLE `post` (
   `id` int(10) UNSIGNED NOT NULL,
-  `content` varchar(300) NOT NULL
+  `content` varchar(300) NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `timestamp` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -201,21 +183,6 @@ ALTER TABLE `media`
 ALTER TABLE `people`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `usename` (`usename`);
-
---
--- Indexes for table `people_post`
---
-ALTER TABLE `people_post`
-  ADD PRIMARY KEY (`user_id`,`post_id`),
-  ADD KEY `post_id` (`post_id`);
-
---
--- Indexes for table `people_post_comment`
---
-ALTER TABLE `people_post_comment`
-  ADD KEY `comment_user_id` (`comment_user_id`),
-  ADD KEY `comment_id` (`comment_id`),
-  ADD KEY `post_id` (`post_id`);
 
 --
 -- Indexes for table `post`
@@ -286,21 +253,6 @@ ALTER TABLE `group_people`
 --
 ALTER TABLE `media`
   ADD CONSTRAINT `media_ibfk_1` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `people_post`
---
-ALTER TABLE `people_post`
-  ADD CONSTRAINT `people_post_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `people` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `people_post_ibfk_2` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `people_post_comment`
---
-ALTER TABLE `people_post_comment`
-  ADD CONSTRAINT `people_post_comment_ibfk_1` FOREIGN KEY (`comment_user_id`) REFERENCES `people` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `people_post_comment_ibfk_2` FOREIGN KEY (`comment_id`) REFERENCES `comment` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `people_post_comment_ibfk_3` FOREIGN KEY (`post_id`) REFERENCES `post` (`id`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
