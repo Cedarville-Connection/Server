@@ -1,3 +1,6 @@
+# Hide auto generated CSS
+src/main/resources/static/css/tailwind.css 
+
 # MacOS Cruft
 .DS_Store
 

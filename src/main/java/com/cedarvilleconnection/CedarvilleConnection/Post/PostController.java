@@ -1,5 +1,6 @@
 package com.cedarvilleconnection.CedarvilleConnection.Post;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,9 +45,19 @@ public class PostController {
     public ModelAndView comment(@RequestParam("comment") String contents, @RequestParam("postId") long postId) {
 		Comment comment = new Comment();
 		comment.setPost(postRepository.findById(postId).get());
-		comment.setUser(peopleRepository.findById((long) 15).get());
+		comment.setUser(peopleRepository.findById((long) 1).get()); // FIXME: change to current user
 		comment.setContents(contents);
 		commentRepository.save(comment);
+		return index();
+    }
+    
+    @PostMapping("/post")
+    public ModelAndView comment(@RequestParam("postContents") String content) {
+    	Post post = new Post();
+    	post.setComments(new ArrayList<Comment>());
+    	post.setContent(content);
+    	post.setUser(peopleRepository.findById((long) 1).get()); // FIXME: change to current user
+    	postRepository.save(post);
 		return index();
     }
 

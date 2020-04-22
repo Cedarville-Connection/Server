@@ -34,7 +34,18 @@
     			</div>
     		</div>
     		<div class="flex flex-col lg:w-1/2">
-    			<div class="pt-6 pb-4">
+    			<div class="pt-4">
+    				<h1 class="text-center">Create Post</h1>
+    				<div>
+    					<form method="POST" action="/post" class="p-2">
+	                    	<div class="flex flex-row flex-1 p-1 my-auto bg-white rounded">
+					    		<textarea type="text" name="postContents" placeholder="Post Text" class="bg-transparent flex-1 focus:outline-none"></textarea>
+				    		</div>
+				    		<button type="submit" class="rounded bg-secondary w-full m-1 py-1 flex justify-center focus:outline-none text-white">Post</button>
+	                    </form>
+    				</div>
+    			</div>
+    			<div class="pt-1 pb-4">
     			
     			
     			<!-- 
@@ -60,60 +71,6 @@
     			
     				<div th:replace="template :: posts"></div>
     			
-	    			<div class="bg-white shadow-xl rounded-lg overflow-hidden">
-	                    <div class="p-4 pb-0 flex w-full items-center">
-	                    	<span class="mr-4">IMG</span>
-	                    	<div class="flex flex-col">
-								<p class="text-xl text-gray-900">Thomas White</p>
-								<span class="text-secondaryText text-xs">8 minutes ago</span>
-							</div>
-	                    </div>
-	                    <div class="p-4 pt-0 flex flex-wrap break-words w-full">
-	                    	<p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet, for the Word of God and the testimony of Jesus Christ. Interdum et malesuada fames ac ante ipsum primis in faucibus. Aliquam sed lacus laoreet risus feugiat accumsan non a erat. 1000 Days. Duis blandit metus eu orci commodo, nec facilisis magna finibus. Morbi sapien purus, blandit at semper a, consectetur vitae nibh. </p>
-	                    </div>
-	                    <div class="h-1 w-11/12 border-t border-gray-300 mx-auto"></div>
-	                    <div class="flex justify-center items-center p-2 text-secondaryText font-bold text-sm select-none">
-	                        <div class="mx-12 flex items-center cursor-pointer">
-	                        	<span>203</span>
-	                            <i class="fa fa-thumbs-o-up ml-1 mr-2" aria-hidden="true"></i>
-								<span>Like</span>
-	                        </div>
-							<div class="commentButton flex items-center cursor-pointer">
-	                            <i class="fa fa-commenting-o mr-2" aria-hidden="true"></i>
-								<span>Comments</span>
-	                        </div>
-							<div class="mx-12 flex items-center cursor-pointer">
-	                            <i class="fa fa-share-square-o mr-2" aria-hidden="true"></i>
-								<span>Share</span>
-	                        </div>
-	                    </div>
-	                    <div class="commentBox">
-	                    	<div class="commentList flex flex-col">
-		                    	<div class="px-4 py-2">
-			                    	<a href="#" class="flex w-full items-center">
-				                    	<span class="mr-2">IMG</span>
-				                    	<span class="text-sm text-gray-900 font-bold">Thomas White <span class="text-secondaryText font-normal">8 minutes ago</span></span>
-			                    	</a>
-				                    <div class="flex flex-wrap break-words w-full">
-				                    	<p class="text-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer sit amet, for the Word of God and the testimony of Jesus Christ.</p>
-				                    </div>
-		                    	</div>
-	                    	</div>
-	                    	
-	                    	<div>
-	                    		<form method="POST" action="/comment" class="p-2">
-	                    			<div class="flex flex-row flex-1 p-1 my-auto">
-					    				<textarea type="text" name="userName" placeholder="Comment Text" class="flex-1 focus:outline-none"></textarea>
-				    				</div>
-				    				<button type="submit" class="rounded bg-primary w-full py-1 flex justify-center focus:outline-none">Comment</button>
-	                    		</form>
-	                    	</div>
-	                    </div>
-	                </div> <!-- Template Post -->
-	                
-	                
-	                
-	                
     			</div> <!-- Card Wrapper -->
     		</div> <!-- Main Section -->
     		<div class="flex flex-col justify-start lg:w-1/4">

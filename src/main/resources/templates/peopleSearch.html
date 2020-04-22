@@ -8,45 +8,12 @@
     	<nav th:replace="template :: navbar"></nav>
     
         <h3 class="text-center w-full text-3xl font-bold">Search Results</h3>
-        <!-- <form th:object="${people}" method="post">
-            <div>
-                <label for="subject">Subject: </label>
-                <input type="text" name="userId" th:value="${peopleSearch}">
-                <input type="submit" value="Search">
-            </div>
-        </form> -->
-
-        <!-- <table>
-            <tr>
-            	<th>Id</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Email</th>
-                <th>Profile Pic</th>
-                <th>Address</th>
-                <th>Gender</th>
-                <th>DOB</th>
-            </tr>
-            <tr th:each="people : ${people}">
-            	<td><span th:text="${people.id}">people.first_name</span></td>
-                <td><span th:text="${people.first_name}">people.first_name</span></td>
-                <td><span th:text="${people.last_name}">people.last_name</span></td>
-                <td><span th:text="${people.email}">peopleR.NAME</span></td>
-                <td><span th:text="${people.profile_pic}">peopleR.peopleRPOSITION</span></td>
-                <td><span th:text="${people.address}">people.PUBLISHED</span></td>
-                <td><span th:text="${people.gender}">people.PUBLISHED</span></td>
-                <td><span th:text="${people.date}">people.PUBLISHED</span></td>
-            </tr>
-
-        </table> -->
-        <table>
+        
+<!--         <table>
         <tr th:each="var : ${#vars.getVariableNames()}">
             <td th:text="${var}"></td>
             <td th:text="${#vars.getVariable(var)}"></td>
         </tr>
-        <!-- Adding these manually because they're considered special.
-             see https://github.com/thymeleaf/thymeleaf/blob/thymeleaf-3.0.3.RELEASE/src/main/java/org/thymeleaf/context/WebEngineContext.java#L199
-        -->
         <tr>
             <td>param</td>
             <td th:text="${#vars.getVariable('param')}"></td>
@@ -59,7 +26,7 @@
             <td>application</td>
             <td th:text="${#vars.getVariable('application')}"></td>
         </tr>
-    </table>
+    </table> -->
         
         <div class="grid grid-cols-4 gap-2">
         

@@ -1,5 +1,12 @@
 package com.cedarvilleconnection.CedarvilleConnection.Comment;
 
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
+import java.util.Date;
+import java.util.TimeZone;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ForeignKey;
@@ -8,6 +15,9 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.ocpsoft.prettytime.PrettyTime;
 
 import com.cedarvilleconnection.CedarvilleConnection.People.People;
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
@@ -57,5 +67,36 @@ public class Comment {
 	
 	public void setContents(String newContents) {
 		this.contents = newContents;
+	}
+	
+    private Timestamp timestamp;
+    private String pt;
+
+    @Column(name = "timestamp")
+    public Timestamp getTimestamp() {
+		return timestamp;
+	}
+   
+	public void setTimestamp(Timestamp timestamp) {
+		
+		this.pt = new PrettyTime(getESTDate()).format(timestamp);
+		this.timestamp = timestamp;
+	}
+	
+	@Transient
+	public String getPrettyTime() {
+		return this.pt;
+	}
+	
+	@Transient
+	public Date getESTDate() {
+		// FIXME: not working correctly
+		SimpleDateFormat f = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
+		f.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
+		try {
+			return f.parse(f.format(new Date()));
+		} catch (ParseException e) {
+			return null;
+		}
 	}
 }

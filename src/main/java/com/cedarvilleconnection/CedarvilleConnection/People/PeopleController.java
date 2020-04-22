@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
+import com.cedarvilleconnection.CedarvilleConnection.Post.PostRepository;
+
 @RestController
 @RequestMapping("/")
 public class PeopleController {
@@ -57,8 +60,9 @@ public class PeopleController {
     	ModelAndView mav = new ModelAndView("profile");
     	
         People user = peopleRepository.findById(userId).get();
-//        return ResponseEntity.ok().body(user);
+        List<Post> posts = user.getPosts();
         
+        mav.addObject("posts", posts);
         mav.addObject("user", user);
         return mav;
     }
