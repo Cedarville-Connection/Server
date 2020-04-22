@@ -1,4 +1,4 @@
-package com.cedarvilleconnection.CedarvilleConnection.model;
+package com.cedarvilleconnection.CedarvilleConnection.Comment;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,6 +9,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
+import com.cedarvilleconnection.CedarvilleConnection.People.People;
+import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity

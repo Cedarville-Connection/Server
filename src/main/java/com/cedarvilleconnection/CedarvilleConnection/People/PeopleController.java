@@ -1,4 +1,4 @@
-package com.cedarvilleconnection.CedarvilleConnection.controller;
+package com.cedarvilleconnection.CedarvilleConnection.People;
 
 import java.util.HashMap;
 import java.util.List;
@@ -19,10 +19,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.cedarvilleconnection.CedarvilleConnection.model.People;
-import com.cedarvilleconnection.CedarvilleConnection.repository.PeopleRepository;
-
 @RestController
+@RequestMapping("/")
 public class PeopleController {
     @Autowired
     private PeopleRepository peopleRepository;

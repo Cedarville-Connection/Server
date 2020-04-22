@@ -1,10 +1,10 @@
-package com.cedarvilleconnection.CedarvilleConnection.repository;
+package com.cedarvilleconnection.CedarvilleConnection.People;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import com.cedarvilleconnection.CedarvilleConnection.model.People;
+import com.cedarvilleconnection.CedarvilleConnection.People.People;
 
 @Repository
 public interface PeopleRepository extends JpaRepository<People, Long> {

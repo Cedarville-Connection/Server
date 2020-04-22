@@ -1,11 +1,12 @@
-package com.cedarvilleconnection.CedarvilleConnection.model;
+package com.cedarvilleconnection.CedarvilleConnection.Post;
 
 import java.util.List;
 
 import javax.persistence.*;
 
+import com.cedarvilleconnection.CedarvilleConnection.Comment.Comment;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import com.cedarvilleconnection.CedarvilleConnection.model.People;
+import com.cedarvilleconnection.CedarvilleConnection.People.People;
 
 @Entity
 @Table(name = "post")

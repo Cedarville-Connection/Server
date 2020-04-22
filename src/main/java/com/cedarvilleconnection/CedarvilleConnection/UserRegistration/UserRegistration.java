@@ -1,4 +1,4 @@
-package com.cedarvilleconnection.CedarvilleConnection.model;
+package com.cedarvilleconnection.CedarvilleConnection.UserRegistration;
 
 public class UserRegistration {
 

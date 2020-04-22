@@ -30,8 +30,6 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         auth
             .jdbcAuthentication()
             .dataSource(dataSource);
-//            .usersByUsernameQuery("select `username` from `users` where `username` = ?")
-//            .authoritiesByUsernameQuery("select `authority` from `authorities` where `username` = ?");
     }
 
     @Override
@@ -39,6 +37,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http
             .authorizeRequests()
                 .antMatchers("/login").permitAll()
+                .antMatchers("/favicon.ico").permitAll()
                 .antMatchers("/register").permitAll()
                 .antMatchers("/admin").hasRole("admin")
                 .antMatchers("/js/**", "/css/**").permitAll()

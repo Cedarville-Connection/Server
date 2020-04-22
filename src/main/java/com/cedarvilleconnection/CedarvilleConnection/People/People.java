@@ -1,12 +1,9 @@
-package com.cedarvilleconnection.CedarvilleConnection.model;
+package com.cedarvilleconnection.CedarvilleConnection.People;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Set;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.EntityListeners;
 import javax.persistence.FetchType;
@@ -16,7 +13,7 @@ import javax.persistence.Table;
 
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-import com.cedarvilleconnection.CedarvilleConnection.model.Post;
+import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity

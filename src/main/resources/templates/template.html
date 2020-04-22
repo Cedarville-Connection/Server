@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
 
 	<head th:fragment="header">
 		<meta charset="UTF-8">
@@ -42,7 +43,7 @@
     				<div class="flex flex-row">
     					<div class="pr-4 border-r border-gray-700 cursor-pointer">
     						<span>IMG</span>
-    						<span>NAME</span>
+    						<span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
     					</div>
     				</div>
     				<div class="flex flex-row pr-4">
