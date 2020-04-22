@@ -12,14 +12,14 @@ import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import javax.sql.DataSource;
 
 @Configuration
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     DataSource dataSource;
 
     @Bean
-    public JdbcUserDetailsManager jdbcUserDetailsManager() throws Exception {
+    public JdbcUserDetailsManager jdbcUserDetailsManager() {
         JdbcUserDetailsManager jdbcUserDetailsManager = new JdbcUserDetailsManager();
         jdbcUserDetailsManager.setDataSource(dataSource);
         return jdbcUserDetailsManager;
@@ -29,32 +29,29 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     public void configAuthentication(AuthenticationManagerBuilder auth) throws Exception {
         auth
             .jdbcAuthentication()
-            .dataSource(dataSource)
-            .usersByUsernameQuery("select email, password from users where email=?")
-            .authoritiesByUsernameQuery(
-                "select u.email, u.authority " +
-                "from user_authorities a, users u " +
-                "where u.email = ? " +
-                "and u.id = a.user_id"
-            );
+            .dataSource(dataSource);
+//            .usersByUsernameQuery("select `username` from `users` where `username` = ?")
+//            .authoritiesByUsernameQuery("select `authority` from `authorities` where `username` = ?");
     }
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
             .authorizeRequests()
-                .antMatchers("/").authenticated()
-                .antMatchers("/admin").hasAnyRole("admin")
-                .antMatchers("/css/**").permitAll()
+                .antMatchers("/login").permitAll()
+                .antMatchers("/register").permitAll()
+                .antMatchers("/admin").hasRole("admin")
+                .antMatchers("/js/**", "/css/**").permitAll()
+                .antMatchers("/**").hasAnyRole("user", "admin")
+                .anyRequest().authenticated()
                 .and()
             .formLogin()
                 .loginPage("/login")
+//                .defaultSuccessUrl("/home")
                 .permitAll()
                 .and()
             .logout()
-                .permitAll()
-                .and()
-            .httpBasic();
+                .permitAll();
 
         // Handle CSRF security
         http.csrf().disable();

@@ -36,7 +36,7 @@ public class PostController {
 
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index() {
-    	ModelAndView mav = new ModelAndView("index");
+    	ModelAndView mav = new ModelAndView("home");
         mav.addObject("posts", getAllPosts());
         return mav;
     }
