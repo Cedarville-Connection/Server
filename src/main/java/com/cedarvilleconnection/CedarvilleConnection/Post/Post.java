@@ -70,17 +70,8 @@ public class Post {
     public void setUser(People user) {
         this.user = user;
     }
-    
 
     private List<Comment> comments;
-    
-	public void addComment(Comment comment) {
-		this.comments.add(comment);
-	}
-
-	public void removePost(Comment comment) {
-		this.comments.remove(comment);
-	}
 	
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
 	public List<Comment> getComments() {

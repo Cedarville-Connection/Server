@@ -51,12 +51,7 @@
     						<span>Home</span>
     					</a>
     				</div>
-    				<!-- <div class="flex flex-row pr-4">
-    					<a href="#" class="pr-4 border-r border-gray-700">
-    						<span>Create</span>
-    					</a>
-    				</div> -->
-						<div class="flex flex-row pr-4">
+					<div class="flex flex-row pr-4">
     					<span class="pr-4 border-r border-gray-700">
     						<a href="#" class="pr-2"><i class="fa fa-lg fa-users" aria-hidden="true"></i></a>
     						<a href="#" class="pr-2"><i class="fa fa-lg fa-comments" aria-hidden="true"></i></a>
@@ -71,12 +66,12 @@
 							      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
 							    </button>
 							    <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
-										<li class=""><form th:action="@{/logout}" method="post"><button type="submit" class="rounded-t bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Sign Out</button></form></li>
-							      <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">?</a></li>
-							      <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">?</a></li>
+										<li class=""><form th:action="@{/logout}" method="post"><button type="submit" class="rounded-t rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Sign Out</button></form></li>
+							      <!-- <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">?</a></li>
+							      <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">?</a></li> -->
 							    </ul>
 						  	</div>
-							</div>
+						</div>
     				</div>
     			</div>
     		</div>
@@ -113,8 +108,10 @@
 								<span>Comments</span>
 	                        </div>
 							<div class="mx-12 flex items-center cursor-pointer">
-	                            <i class="fa fa-share-square-o mr-2" aria-hidden="true"></i>
-								<span>Share</span>
+								<span class="shareButton" th:attr="data-postId=${post.id}">
+	                            	<i class="fa fa-share-square-o mr-2" aria-hidden="true"></i>
+									<span>Share</span>
+								</span>
 	                        </div>
 	                    </div>
 	                    <div class="commentBox">

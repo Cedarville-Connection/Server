@@ -83,6 +83,30 @@ public class PeopleController {
         mav.addObject("isFollowing", isFollowing);
         return mav;
     }
+    
+    @GetMapping("/people/{id}/followers")
+    public ModelAndView showFollowers(@AuthenticationPrincipal User auth, 
+    		@PathVariable(value = "id") Long userId) {
+    	
+    	People user = peopleRepository.findById(userId).get();
+    	
+    	ModelAndView mav = new ModelAndView("peopleSearch");
+        mav.addObject("people", user.getFollower());
+        mav.addObject("currentUser", getCurrentUser(auth));
+        return mav;
+    }
+    
+    @GetMapping("/people/{id}/following")
+    public ModelAndView showFollowing(@AuthenticationPrincipal User auth, 
+    		@PathVariable(value = "id") Long userId) {
+    	
+    	People user = peopleRepository.findById(userId).get();
+    	
+    	ModelAndView mav = new ModelAndView("peopleSearch");
+        mav.addObject("people", user.getFollowing());
+        mav.addObject("currentUser", getCurrentUser(auth));
+        return mav;
+    }
 
     @PostMapping("/people")
     public People createPeople(@Valid @RequestBody People person) {
