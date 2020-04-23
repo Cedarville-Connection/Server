@@ -1,10 +1,10 @@
 package com.cedarvilleconnection.CedarvilleConnection.UserRegistration;
 
+import com.cedarvilleconnection.CedarvilleConnection.People.People;
+import com.cedarvilleconnection.CedarvilleConnection.People.PeopleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.parameters.P;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.provisioning.JdbcUserDetailsManager;
 import org.springframework.stereotype.Controller;
@@ -23,6 +23,9 @@ public class UserRegistrationController {
     @Autowired
     JdbcUserDetailsManager jdbcUserDetailsManager;
 
+    @Autowired
+    PeopleRepository peopleRepository;
+
     @PostMapping
     public ModelAndView processRegister(
         @ModelAttribute("user") UserRegistration userRegistrationObject) {
@@ -34,9 +37,17 @@ public class UserRegistrationController {
 
             String username = userRegistrationObject.getUsername();
             String password = userRegistrationObject.getPassword();
-            User user = new User(username, "{noop}" + password, authorities);
+            User user;
+            user = new User(username, "{noop}" + password, authorities);
 
             jdbcUserDetailsManager.createUser(user);
+
+            // Create person entry for new user
+            People person = new People();
+            peopleRepository.save(person);
+
+            com.cedarvilleconnection.CedarvilleConnection.User.User jdbcUser;
+            jdbcUser = new com.cedarvilleconnection.CedarvilleConnection.User.User()
         } catch (Exception ex) {
             return new ModelAndView("redirect:/login?regError");
         }

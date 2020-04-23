@@ -22,7 +22,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @EntityListeners(AuditingEntityListener.class)
 @NamedQuery(name = "People.findByName", query = "SELECT p FROM People p "
 		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
+@NamedQuery(name = "People.findByUsername", query = "SELECT p FROM User u, People p WHERE u.Username = ?1 " +
+	"AND u.PersonId = p.id")
 public class People {
+	@Column(name = "id", nullable = false)
 	private long id;
 
 	@Column(name = "first_name", nullable = false)
@@ -36,8 +39,6 @@ public class People {
 	private String email;
 	private int gender;
 	private Date date;
-
-	
 
 	private List<Post> posts;
 //	public void addPost(Post post) {
