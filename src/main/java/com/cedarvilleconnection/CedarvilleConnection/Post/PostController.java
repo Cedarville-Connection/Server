@@ -45,9 +45,13 @@ public class PostController {
     @RequestMapping(method = RequestMethod.GET)
     public ModelAndView index(@AuthenticationPrincipal User auth) {
     	ModelAndView mav = new ModelAndView("home");
-    	
+
+
+
+
     	List<Post> feed = new ArrayList<Post>();
     	People currentUser = getCurrentUser(auth);
+
     	for(People p : currentUser.getFollowing()) {
     		for(Post post : p.getPosts()) {
     			feed.add(post);

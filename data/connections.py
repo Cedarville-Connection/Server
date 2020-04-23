@@ -6,6 +6,7 @@ import argparse
 import json
 import logging
 import requests
+import random
 
 import mysql.connector
 
@@ -26,24 +27,20 @@ def export_to_mysql(db, table, username, password, values):
         cur = conn.cursor()
 
         logging.info(f"Inserting users into {table}")
-        for user in values:
-            user_loc = user["location"]
-            addr = f"{user_loc['street']['number']} {user_loc['street']['name']} {user_loc['city']} {user_loc['state']}, {user_loc['postcode']} {user_loc['country']}"
-            gender = user["gender"]
-            intGender = -1
-            if gender=="male":
-                intGender = 1
-            else :
-                intGender = 0
-            dob = user["dob"]["date"]
-            dob = dob[0:10] + " " + dob[11:19]
-
-            insert_vals = (addr, dob, user["email"], user["name"]["first"],
-                           user["name"]["last"], intGender, user["picture"]["medium"])
-            cur.execute(
-                f"""insert into `{table}` (`address`,`dob`, `email`, `first_name`, `last_name`, `gender`, `profile_pic`) values (%s, %s, %s, %s, %s, %s, %s)""",
-                insert_vals
-            )
+        userCount = 1
+        friendCountBase = 314
+        friendCount = friendCountBase
+        while userCount <= 1:
+            rand = random.randint(20, 50) +friendCount
+            while friendCount < (rand):
+                insert_vals = (str(userCount), str(friendCount))
+                cur.execute(
+                    f"""insert into `{table}` (`friend_id`,`user_id`) values (%s, %s)""",
+                    insert_vals
+                )
+                friendCount += 1
+            userCount += 1
+            friendCount = friendCountBase
         conn.commit()
         logging.info("Closing connection to DB")
         conn.close()
