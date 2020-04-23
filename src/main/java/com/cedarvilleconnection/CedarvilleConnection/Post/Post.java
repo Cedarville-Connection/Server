@@ -19,7 +19,7 @@ import com.cedarvilleconnection.CedarvilleConnection.Reaction.Reaction;
 @Entity
 @Table(name = "post")
 @EntityListeners(AuditingEntityListener.class)
-public class Post implements Comparable<Post> {
+public class Post {
 
     private long id;
     private String content;
@@ -72,7 +72,6 @@ public class Post implements Comparable<Post> {
     }
     
     
-    
     private List<Comment> comments;
     
 	public void addComment(Comment comment) {
@@ -92,10 +91,8 @@ public class Post implements Comparable<Post> {
 	}
 	
 	
-	
 	private List<Reaction> reactions;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
 	public List<Reaction> getReactions() {
 		return reactions;
 	}
@@ -141,11 +138,4 @@ public class Post implements Comparable<Post> {
         this.content = content;
     }
     
-    @Override
-    public int compareTo(Post u) {
-      return getId() > u.getId() ? 1 : 2;
-    }
-
-
-
 }

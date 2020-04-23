@@ -3,6 +3,7 @@ package com.cedarvilleconnection.CedarvilleConnection.Post;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -53,7 +54,18 @@ public class PostController {
     		}
     	}
     	feed.addAll(currentUser.getPosts());
-    	Collections.reverse(feed);
+    	Collections.sort(feed, new Comparator<Post>() {
+    	    @Override
+    	    public int compare(Post p1, Post p2) {
+    	    	if(p1.getId() == p2.getId()) {
+    	    		return 0;
+    	    	} else if(p1.getId() > p2.getId()) {
+    	    		return -1;
+    	    	} else {
+    	    		return 1;
+    	    	}
+    	    }
+    	});
     	
     	for(Post post : feed) {
     		for(Reaction react : post.getReactions()) {

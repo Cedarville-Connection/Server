@@ -1,12 +1,9 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
       xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
-<head>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-    <link th:href="@{/css/tailwind.css}" rel="stylesheet"/>
+      
+<head th:replace="template :: header"></head>
 
-    <title>Log In | Cedarville Connection</title>
-</head>
 <body class="flex flex-col items-center h-full p-20">
     <header class="flex flex-row flex-no-wrap font-black text-2xl text-gray-900 tracking-wide">
         the <span class="text-yellow-500 px-1">Cedarville</span><span class="text-blue-500">Connection</span>
@@ -41,7 +38,7 @@
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="password" id="registerPassword" type="password" placeholder="Password">
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    <i class="fas fa-user-plus"></i>
+                    <i class="fa fa-user-plus"></i>
                     Register
                 </button>
             </form>
@@ -57,7 +54,7 @@
                     <input class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline" name="password" id="password" type="password" placeholder="Password">
                 </div>
                 <button class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
-                    <i class="fas fa-sign-in-alt"></i>
+                    <i class="fa fa-sign-in-alt"></i>
                     Sign In
                 </button>
             </form>
