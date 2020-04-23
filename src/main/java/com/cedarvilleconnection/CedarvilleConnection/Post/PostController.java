@@ -142,6 +142,22 @@ public class PostController {
 	    }
     }
     
+    @PostMapping("/share")
+    @ResponseBody
+    public String share(@AuthenticationPrincipal User auth,
+					   @RequestParam(value = "postId") long postId) {
+    	
+    	Post post = postRepository.findById(postId).get();
+    	
+    	Post newPost = new Post();
+		newPost.setComments(new ArrayList<>());
+		newPost.setContent(post.getContent());
+		newPost.setTimestamp(new Timestamp(new Date().getTime()));
+		newPost.setUser(getCurrentUser(auth));
+		postRepository.save(newPost);
+		return "OK";
+    }
+    
     @GetMapping("/likes")
     public List<Reaction> getAllReactions() {
     	return reactionRepository.findAll();

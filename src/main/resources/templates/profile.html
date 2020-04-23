@@ -17,8 +17,8 @@
 					<h1 class="text-3xl text-center font-semibold"><span th:text="${user.first_name}">First</span> <span th:text="${user.last_name}">Last</span></h1>
 			    </div>
 			    <div class="flex flex-row justify-center text-gray-600">
-			    	<p class="mt-0 m-2 text-sm font-bold">Followers <span th:text="${user.follower.size()}"></span></p>
-			    	<p class="mt-0 m-2 text-sm font-bold">Following <span th:text="${user.following.size()}"></span></p>
+			    	<a th:href="@{/people/{id}/followers(id=${user.id})}" class="mt-0 m-2 text-sm font-bold">Followers <span th:text="${user.follower.size()}"></span></a>
+			    	<a th:href="@{/people/{id}/following(id=${user.id})}" class="mt-0 m-2 text-sm font-bold">Following <span th:text="${user.following.size()}"></span></a>
 			    </div>
 			    <div class="flex flex-row justify-center text-gray-600">
 			    	<form action="/follow" method="POST">
