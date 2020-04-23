@@ -47,7 +47,7 @@ public class PostController {
     	ModelAndView mav = new ModelAndView("home");
     	
     	List<Post> feed = new ArrayList<Post>();
-    	People currentUser = peopleRepository.findByUsername(auth.getUsername());
+    	People currentUser = getCurrentUser(auth);
     	for(People p : currentUser.getFollowing()) {
     		for(Post post : p.getPosts()) {
     			feed.add(post);
@@ -77,6 +77,7 @@ public class PostController {
     	}
     	
         mav.addObject("posts", feed);
+        mav.addObject("currentUser", currentUser);
         return mav;
     }
     

@@ -41,10 +41,10 @@
     			</form>
     			<div class="flex flex-row flex-1 justify-end text-ternaryText text-sm select-none">
     				<div class="flex flex-row">
-    					<div class="pr-4 border-r border-gray-700 cursor-pointer">
-    						<span>IMG</span>
-    						<span sec:authorize="isAuthenticated()" sec:authentication="name"></span>
-    					</div>
+    					<a th:href="@{/people/{id}(id=${currentUser.id})}" class="pr-4 border-r border-gray-700 cursor-pointer flex flex-row items-center">
+    						<img th:src="${currentUser.profile_pic}" class="mr-2 w-4 rounded-full"/>
+    						<span class="text-sm"><span th:text="${currentUser.first_name}"></span> <span th:text="${currentUser.last_name}"></span></span>
+    					</a>
     				</div>
     				<div class="flex flex-row pr-4">
     					<a href="/" class="px-4 border-r border-gray-700">
