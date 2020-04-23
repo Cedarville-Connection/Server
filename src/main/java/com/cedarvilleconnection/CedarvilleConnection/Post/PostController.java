@@ -6,16 +6,11 @@ import java.util.Date;
 import java.util.List;
 
 import com.cedarvilleconnection.CedarvilleConnection.People.People;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -47,7 +42,7 @@ public class PostController {
     private ReactionRepository reactionRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView index() {
+    public ModelAndView home() {
     	ModelAndView mav = new ModelAndView("home");
         mav.addObject("posts", getAllPosts());
         return mav;
