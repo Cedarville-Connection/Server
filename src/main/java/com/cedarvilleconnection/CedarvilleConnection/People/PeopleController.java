@@ -8,15 +8,7 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
@@ -61,9 +53,18 @@ public class PeopleController {
     	
         People user = peopleRepository.findById(userId).get();
         List<Post> posts = user.getPosts();
+
+        long currentId = 2;
+        boolean isFollowing = false;
+        for(People person: user.getFollower()){
+            if(person.getId() == currentId){
+                isFollowing = true;
+            }
+        }
         
         mav.addObject("posts", posts);
         mav.addObject("user", user);
+        mav.addObject("isFollowing", isFollowing);
         return mav;
     }
 
@@ -100,4 +101,42 @@ public class PeopleController {
         response.put("deleted", Boolean.TRUE);
         return response;
     }
+
+    @PostMapping("/follow")
+    @ResponseBody
+    public ModelAndView follow( @RequestParam("user") long followingId){
+
+        long currentUserId = 2;
+        People user = peopleRepository.findById(currentUserId).get();
+        People toFollow = peopleRepository.findById(followingId).get();
+        boolean isFollowing =false;
+        People tempPerson = null;
+        for (People person : toFollow.getFollower()) {
+            if(currentUserId == person.getId()){
+                isFollowing = true;
+                tempPerson = person;
+            }
+        }
+        if(isFollowing){
+            user.removeFollowing(toFollow);
+            toFollow.removeFollower(user);
+        }else{
+            user.addFollowing(toFollow);
+            toFollow.addFollower(user);
+        }
+        peopleRepository.save(user);
+        return getPeopleById(followingId);
+    }
+
+//    @GetMapping("/toFollow/{id}")
+//    public ModelAndView toFollows(@PathVariable(value = "id") Long userId){
+//        ModelAndView mav = new ModelAndView("template");
+//
+//        People user = peopleRepository.findById(userId).get();
+//        List<People> toFollows = user.getFollower();
+//
+//        mav.addObject("toFollow", toFollows.leng);
+//        mav.addObject("user", user);
+//        return mav;
+//    }
 }

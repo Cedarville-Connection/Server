@@ -17,13 +17,14 @@
 					<h1 class="text-3xl text-center font-semibold"><span th:text="${user.first_name}">First</span> <span th:text="${user.last_name}">Last</span></h1>
 			    </div>
 			    <div class="flex flex-row justify-center text-gray-600">
-			    	<p class="mt-0 m-2 text-sm font-bold">Followers <span>10</span></p>
-			    	<p class="mt-0 m-2 text-sm font-bold">Following <span>12</span></p>
+			    	<p class="mt-0 m-2 text-sm font-bold">Followers <span th:text="${user.follower.size()}"></span></p>
+			    	<p class="mt-0 m-2 text-sm font-bold">Following <span th:text="${user.following.size()}"></span></p>
 			    </div>
 			    <div class="flex flex-row justify-center text-gray-600">
 			    	<form action="/follow" method="POST">
 			    		<input name="user" th:value="${user.id}" hidden>
-			    		<button type="submit" class="px-4 py-1 bg-secondary text-white rounded">Follow</button>
+			    		<button id="followButton" type="submit" class="px-4 py-1 bg-secondary text-white rounded" th:text="${isFollowing} ? 'Unfollow' : 'Follow'">
+						</button>
 			    	</form>
 			    </div>
 			    <div class="flex flex-col justify-center">

@@ -3,22 +3,16 @@ package com.cedarvilleconnection.CedarvilleConnection.People;
 import java.util.Date;
 import java.util.List;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.EntityListeners;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "people")
-@JsonIgnoreProperties({"posts"})
+@JsonIgnoreProperties({"posts","hibernateLazyInitializer", "handler", "follower", "following"})
 @EntityListeners(AuditingEntityListener.class)
 @NamedQuery(name = "People.findByName", query = "SELECT p FROM People p "
 		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
@@ -37,7 +31,59 @@ public class People {
 	private int gender;
 	private Date date;
 
-	
+	private List<People> follower;
+//	@ManyToMany(cascade = {CascadeType.ALL})
+	@ManyToMany(fetch = FetchType.LAZY)
+	@JoinTable(name="followers", joinColumns =@JoinColumn(name="user_id"),
+			inverseJoinColumns = @JoinColumn(name ="friend_id")
+	)
+//	@JsonIdentityInfo(
+//			generator = ObjectIdGenerators.PropertyGenerator.class,
+//			property = "id"
+//
+//	)
+	public List<People> getFollower() {
+		return follower;
+	}
+
+
+	public void setFollower(List<People> follower) {
+		this.follower = follower;
+	}
+
+	public void removeFollower(People person){
+		follower.remove(person);
+	}
+
+	public void addFollower(People person){
+		follower.add(person);
+	}
+
+	private List<People> following;
+	@ManyToMany(fetch = FetchType.LAZY,mappedBy = "follower")
+//	@JsonIdentityInfo(
+//			generator = ObjectIdGenerators.PropertyGenerator.class,
+//			property = "id"
+//	)
+//	@JoinTable(name="followers", joinColumns =@JoinColumn(name="friend_id"),
+//			inverseJoinColumns = @JoinColumn(name ="user_id")
+//	)
+	public List<People> getFollowing() {
+		return following;
+	}
+
+	public void setFollowing(List<People> following) {
+		this.following = following;
+	}
+
+	public void addFollowing(People person){
+		following.add(person);
+	}
+
+	public void removeFollowing(People person){
+		following.remove(person);
+	}
+
 
 	private List<Post> posts;
 //	public void addPost(Post post) {
