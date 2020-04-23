@@ -5,12 +5,20 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+<<<<<<< Updated upstream
+import javax.servlet.http.HttpSession;
+import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+=======
 import com.cedarvilleconnection.CedarvilleConnection.People.People;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.User;
+>>>>>>> Stashed changes
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -33,6 +41,8 @@ import com.cedarvilleconnection.CedarvilleConnection.Reaction.ReactionRepository
 @RestController
 @RequestMapping("/")
 public class PostController {
+
+    private static final Logger Logger = LoggerFactory.getLogger("Application");
 
     @Autowired
     private PostRepository postRepository;

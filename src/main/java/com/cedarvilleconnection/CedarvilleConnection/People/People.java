@@ -9,6 +9,7 @@ import com.fasterxml.jackson.annotation.*;
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @Table(name = "people")
@@ -16,7 +17,10 @@ import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
 @EntityListeners(AuditingEntityListener.class)
 @NamedQuery(name = "People.findByName", query = "SELECT p FROM People p "
 		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
+@NamedQuery(name = "People.findByUsername", query = "SELECT p FROM User u, People p WHERE u.Username = ?1 " +
+	"AND u.PersonId = p.id")
 public class People {
+	@Column(name = "id", nullable = false)
 	private long id;
 
 	@Column(name = "first_name", nullable = false)
