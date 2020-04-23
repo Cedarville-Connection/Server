@@ -71,7 +71,7 @@ public class Post {
         this.user = user;
     }
     
-    
+
     private List<Comment> comments;
     
 	public void addComment(Comment comment) {
@@ -90,7 +90,7 @@ public class Post {
 		this.comments = comments;
 	}
 	
-	
+
 	private List<Reaction> reactions;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
 	public List<Reaction> getReactions() {
@@ -137,5 +137,5 @@ public class Post {
     public void setContent(String content){
         this.content = content;
     }
-    
+
 }
