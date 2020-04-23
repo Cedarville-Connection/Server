@@ -21,7 +21,7 @@ def export_to_mysql(db, table, username, password, values):
     cur = None
     try:
         logging.info("Connecting to local MySQL instance")
-        conn = mysql.connector.connect(host="localhost", user=username, passwd=password, db=db)
+        conn = mysql.connector.connect(host="163.11.237.201", user=username, passwd=password, db=db)
 
         cur = conn.cursor()
 
@@ -29,11 +29,20 @@ def export_to_mysql(db, table, username, password, values):
         for user in values:
             user_loc = user["location"]
             addr = f"{user_loc['street']['number']} {user_loc['street']['name']} {user_loc['city']} {user_loc['state']}, {user_loc['postcode']} {user_loc['country']}"
-            insert_vals = (addr, user["dob"]["date"], user["email"], user["name"]["first"],
-                           user["name"]["last"], user["gender"], user["picture"]["medium"])
+            gender = user["gender"]
+            intGender = -1
+            if gender=="male":
+                intGender = 1
+            else :
+                intGender = 0
+            dob = user["dob"]["date"]
+            dob = dob[0:10] + " " + dob[11:19]
+
+            insert_vals = (addr, dob, user["email"], user["name"]["first"],
+                           user["name"]["last"], intGender, user["picture"]["medium"])
             cur.execute(
-                f"""insert into `{table}` (`address`, `dob`, `email`, `first_name`, `last_name`, `gender`, `profile_pic`) values (%s, %s, %s, %s, %s, %s, %s)""",
-                values
+                f"""insert into `{table}` (`address`,`dob`, `email`, `first_name`, `last_name`, `gender`, `profile_pic`) values (%s, %s, %s, %s, %s, %s, %s)""",
+                insert_vals
             )
 
         logging.info("Closing connection to DB")
