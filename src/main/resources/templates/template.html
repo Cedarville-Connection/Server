@@ -102,9 +102,9 @@
 	                    <div class="h-1 w-11/12 border-t border-gray-300 mx-auto"></div>
 	                    <div class="flex justify-center items-center p-2 text-secondaryText font-bold text-sm select-none">
 	                        <div class="mx-12 flex items-center cursor-pointer">
-	                        	<span>203</span>
 	                        	<span class="likeButton" th:attr="data-postId=${post.id}">
-	                            	<i class="fa fa-thumbs-o-up ml-1 mr-2" aria-hidden="true"></i>
+	                        		<span class="amountOfLikes" th:text="${post.amountOfLikes}">0</span>
+	                            	<i th:classappend="${post.userLiked} ? fa-thumbs-up : fa-thumbs-o-up" class="fa ml-1 mr-2" aria-hidden="true"></i>
 									<span>Like</span>
 								</span>
 	                        </div>
@@ -144,7 +144,6 @@
 	                    	</div>
 	                    </div>
 	                </div>
-    	
-    	
-    	
+	                
+	                
 </html>

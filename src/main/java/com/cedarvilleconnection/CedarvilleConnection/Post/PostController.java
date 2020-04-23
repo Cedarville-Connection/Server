@@ -88,20 +88,16 @@ public class PostController {
     @ResponseBody
     public String like(@RequestParam(value = "postId") long postId) {
     	
-//    	System.out.println("POSTID: " + postId);
     	long userId = 1; // FIXME: change to current user
     	
     	Post post = postRepository.findById(postId).get();
     	People user = peopleRepository.findById(userId).get();
     	Reaction reaction = reactionRepository.findByPostAndUser(post, user);
     	
-//    	System.out.println("Starting IF");
     	if(reaction != null) {
-//    		System.out.println("true");
     		reactionRepository.delete(reaction);
     		return "REMOVED";
     	} else {
-//    		System.out.println("false");
 	    	reaction = new Reaction();
 		    reaction.setType(Reaction.LIKE);
 		    

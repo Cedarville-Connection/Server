@@ -99,6 +99,27 @@ public class Post {
 	public void setReactions(List<Reaction> reactions) {
 		this.reactions = reactions;
 	}
+	
+	@Transient
+	public boolean getUserLiked() {
+		for(Reaction r : reactions) {
+			if(r.getUserId() == (long) 1) { // FIXME: change to current user
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	@Transient
+	public int getAmountOfLikes() {
+		int amountOfLikes = 0;
+		for(Reaction r : reactions) {
+			if(r.getType() == Reaction.LIKE) {
+				amountOfLikes++;
+			}
+		}
+		return amountOfLikes;
+	}
 
 
     @Id

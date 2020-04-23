@@ -55,14 +55,20 @@ public class Reaction implements Serializable {
 		return post;
 	}
 	public void setPost(Post post) {
-//		reactionPk.setPost(post.getId());
+		if(reactionPk == null) {
+			reactionPk = new ReactionPK();
+		}
+		reactionPk.setPost(post.getId());
 		this.post = post;
 	}
 	public People getUser() {
 		return user;
 	}
 	public void setUser(People user) {
-//		reactionPk.setUser(user.getId());
+		if(reactionPk == null) {
+			reactionPk = new ReactionPK();
+		}
+		reactionPk.setUser(user.getId());
 		this.user = user;
 	}
 	
