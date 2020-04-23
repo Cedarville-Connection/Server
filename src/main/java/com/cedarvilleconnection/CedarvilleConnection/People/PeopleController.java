@@ -48,7 +48,7 @@ public class PeopleController {
     }
 
     @GetMapping("/people/{id}")
-    public ModelAndView getPeopleById(
+    public ModelAndView getPeopleById( @AuthenticationPrincipal User auth,
             @PathVariable(value = "id") Long userId) {
     	
     	ModelAndView mav = new ModelAndView("profile");
@@ -56,7 +56,9 @@ public class PeopleController {
         People user = peopleRepository.findById(userId).get();
         List<Post> posts = user.getPosts();
 
-        long currentId = 2;
+        People tempPerson = peopleRepository.findByUsername(auth.getUsername());
+        long currentId = tempPerson.getId();
+
         boolean isFollowing = false;
         for(People person: user.getFollower()){
             if(person.getId() == currentId){
@@ -127,7 +129,7 @@ public class PeopleController {
             toFollow.addFollower(user);
         }
         peopleRepository.save(user);
-        return getPeopleById(followingId);
+        return getPeopleById(auth, followingId);
     }
 
 //    @GetMapping("/toFollow/{id}")
