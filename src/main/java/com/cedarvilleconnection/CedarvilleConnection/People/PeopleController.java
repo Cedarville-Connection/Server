@@ -8,11 +8,13 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
-import com.cedarvilleconnection.CedarvilleConnection.Post.PostRepository;
+import com.cedarvilleconnection.CedarvilleConnection.Reaction.Reaction;
 
 @RestController
 @RequestMapping("/")
@@ -21,14 +23,15 @@ public class PeopleController {
     private PeopleRepository peopleRepository;
     
     @GetMapping("/search")
-    public ModelAndView showSearch(People people) {
+    public ModelAndView showSearch(@AuthenticationPrincipal User auth, People people) {
     	ModelAndView mav = new ModelAndView("peopleSearch");
         mav.addObject("people", getAllUsers());
+        mav.addObject("currentUser", getCurrentUser(auth));
         return mav;
     }
     
     @PostMapping("/search")
-    public ModelAndView searchPeople(@RequestParam("userName") String userName) {
+    public ModelAndView searchPeople(@AuthenticationPrincipal User auth, @RequestParam("userName") String userName) {
     	ModelAndView mav = new ModelAndView("peopleSearch");
     	List<People> people = peopleRepository.findByName(userName);
 		
@@ -37,6 +40,7 @@ public class PeopleController {
 		}
     	
         mav.addObject("people", people);
+        mav.addObject("currentUser", getCurrentUser(auth));
         return mav;
     }
 
@@ -46,7 +50,7 @@ public class PeopleController {
     }
 
     @GetMapping("/people/{id}")
-    public ModelAndView getPeopleById(
+    public ModelAndView getPeopleById( @AuthenticationPrincipal User auth,
             @PathVariable(value = "id") Long userId) {
     	
     	ModelAndView mav = new ModelAndView("profile");
@@ -54,7 +58,9 @@ public class PeopleController {
         People user = peopleRepository.findById(userId).get();
         List<Post> posts = user.getPosts();
 
-        long currentId = 2;
+        People currentUser = getCurrentUser(auth);
+        long currentId = currentUser.getId();
+
         boolean isFollowing = false;
         for(People person: user.getFollower()){
             if(person.getId() == currentId){
@@ -62,8 +68,18 @@ public class PeopleController {
             }
         }
         
+        for(Post post : posts) {
+    		for(Reaction react : post.getReactions()) {
+    			if(react.getUserId() == currentUser.getId()) {
+    				post.setUserHasLiked();
+    				break;
+    			}
+    		}
+    	}
+        
         mav.addObject("posts", posts);
         mav.addObject("user", user);
+        mav.addObject("currentUser", getCurrentUser(auth));
         mav.addObject("isFollowing", isFollowing);
         return mav;
     }
@@ -104,17 +120,16 @@ public class PeopleController {
 
     @PostMapping("/follow")
     @ResponseBody
-    public ModelAndView follow( @RequestParam("user") long followingId){
-
-        long currentUserId = 2;
-        People user = peopleRepository.findById(currentUserId).get();
+    public ModelAndView follow(@AuthenticationPrincipal User auth,
+                               @RequestParam("user") long followingId){
+        
+        People user = getCurrentUser(auth);
+        long currentUserId = user.getId();
         People toFollow = peopleRepository.findById(followingId).get();
         boolean isFollowing =false;
-        People tempPerson = null;
         for (People person : toFollow.getFollower()) {
             if(currentUserId == person.getId()){
                 isFollowing = true;
-                tempPerson = person;
             }
         }
         if(isFollowing){
@@ -125,18 +140,10 @@ public class PeopleController {
             toFollow.addFollower(user);
         }
         peopleRepository.save(user);
-        return getPeopleById(followingId);
+        return getPeopleById(auth, followingId);
     }
-
-//    @GetMapping("/toFollow/{id}")
-//    public ModelAndView toFollows(@PathVariable(value = "id") Long userId){
-//        ModelAndView mav = new ModelAndView("template");
-//
-//        People user = peopleRepository.findById(userId).get();
-//        List<People> toFollows = user.getFollower();
-//
-//        mav.addObject("toFollow", toFollows.leng);
-//        mav.addObject("user", user);
-//        return mav;
-//    }
+    
+    public People getCurrentUser(User auth) {
+    	return peopleRepository.findByUsername(auth.getUsername());
+    }
 }

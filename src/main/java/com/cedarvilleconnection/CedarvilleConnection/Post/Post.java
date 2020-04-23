@@ -25,6 +25,9 @@ public class Post {
     private String content;
     private Timestamp timestamp;
     private String pt;
+    
+    @Transient
+    private boolean currentUserLiked = false;
 
     @Column(name = "timestamp")
     public Timestamp getTimestamp() {
@@ -68,8 +71,7 @@ public class Post {
         this.user = user;
     }
     
-    
-    
+
     private List<Comment> comments;
     
 	public void addComment(Comment comment) {
@@ -88,11 +90,9 @@ public class Post {
 		this.comments = comments;
 	}
 	
-	
-	
+
 	private List<Reaction> reactions;
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
-//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
 	public List<Reaction> getReactions() {
 		return reactions;
 	}
@@ -102,12 +102,10 @@ public class Post {
 	
 	@Transient
 	public boolean getUserLiked() {
-		for(Reaction r : reactions) {
-			if(r.getUserId() == (long) 1) { // FIXME: change to current user
-				return true;
-			}
-		}
-		return false;
+		return currentUserLiked;
+	}
+	public void setUserHasLiked() {
+		this.currentUserLiked = true;
 	}
 	
 	@Transient
@@ -139,7 +137,5 @@ public class Post {
     public void setContent(String content){
         this.content = content;
     }
-
-
 
 }

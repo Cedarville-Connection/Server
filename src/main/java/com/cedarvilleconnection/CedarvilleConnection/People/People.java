@@ -17,8 +17,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @EntityListeners(AuditingEntityListener.class)
 @NamedQuery(name = "People.findByName", query = "SELECT p FROM People p "
 		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
-@NamedQuery(name = "People.findByUsername", query = "SELECT p FROM People p, User u WHERE u.Username = ?1 and " +
-	"u.Username = p.username")
+@NamedQuery(name = "People.findByUsername", query = "SELECT p FROM People p WHERE p.username = ?1")
 public class People {
 	@Column(name = "id", nullable = false)
 	private long id;

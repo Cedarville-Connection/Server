@@ -30,7 +30,7 @@ public class UserRegistrationController {
     public ModelAndView processRegister(
         @ModelAttribute("user") UserRegistration userRegistrationObject) {
 
-//        try {
+        try {
             // Authorities to be granted
             List<GrantedAuthority> authorities = new ArrayList<>();
             authorities.add(new SimpleGrantedAuthority("ROLE_user"));
@@ -54,9 +54,9 @@ public class UserRegistrationController {
 
             jdbcUserDetailsManager.createUser(user);
 
-//        } catch (Exception ex) {
-//            return new ModelAndView("redirect:/login?regError");
-//        }
+        } catch (Exception ex) {
+            return new ModelAndView("redirect:/login?regError");
+        }
 
         return new ModelAndView("redirect:/login?register");
     }

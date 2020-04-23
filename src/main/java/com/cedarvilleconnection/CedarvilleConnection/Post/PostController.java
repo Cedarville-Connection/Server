@@ -2,6 +2,8 @@ package com.cedarvilleconnection.CedarvilleConnection.Post;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
@@ -41,15 +43,46 @@ public class PostController {
     private ReactionRepository reactionRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView index() {
+    public ModelAndView index(@AuthenticationPrincipal User auth) {
     	ModelAndView mav = new ModelAndView("home");
-        mav.addObject("posts", getAllPosts());
+    	
+    	List<Post> feed = new ArrayList<Post>();
+    	People currentUser = getCurrentUser(auth);
+    	for(People p : currentUser.getFollowing()) {
+    		for(Post post : p.getPosts()) {
+    			feed.add(post);
+    		}
+    	}
+    	feed.addAll(currentUser.getPosts());
+    	Collections.sort(feed, new Comparator<Post>() {
+    	    @Override
+    	    public int compare(Post p1, Post p2) {
+    	    	if(p1.getId() == p2.getId()) {
+    	    		return 0;
+    	    	} else if(p1.getId() > p2.getId()) {
+    	    		return -1;
+    	    	} else {
+    	    		return 1;
+    	    	}
+    	    }
+    	});
+    	
+    	for(Post post : feed) {
+    		for(Reaction react : post.getReactions()) {
+    			if(react.getUserId() == currentUser.getId()) {
+    				post.setUserHasLiked();
+    				break;
+    			}
+    		}
+    	}
+    	
+        mav.addObject("posts", feed);
+        mav.addObject("currentUser", currentUser);
         return mav;
     }
-
-    @GetMapping("/post")
-    public List<Post> getAllPosts() {
-            return postRepository.findAll();
+    
+    public People getCurrentUser(User auth) {
+    	return peopleRepository.findByUsername(auth.getUsername());
     }
     
     @PostMapping("/comment")
@@ -61,12 +94,12 @@ public class PostController {
     	if (contents != null && !contents.trim().isEmpty()) {
 			Comment comment = new Comment();
 			comment.setPost(postRepository.findById(postId).get());
-			comment.setUser(peopleRepository.findByUsername(auth.getUsername()));
+			comment.setUser(getCurrentUser(auth));
 			comment.setTimestamp(new Timestamp(new Date().getTime()));
 			comment.setContents(contents);
 			commentRepository.save(comment);
     	}
-		return index();
+		return index(auth);
     }
     
     @PostMapping("/post")
@@ -79,20 +112,19 @@ public class PostController {
 	    	post.setComments(new ArrayList<>());
 	    	post.setContent(content);
 	    	post.setTimestamp(new Timestamp(new Date().getTime()));
-	    	post.setUser(peopleRepository.findByUsername(auth.getUsername()));
+	    	post.setUser(getCurrentUser(auth));
 	    	postRepository.save(post);
     	}
-		return index();
+		return index(auth);
     }
 
     @PostMapping("/like")
     @ResponseBody
-    public String like(@RequestParam(value = "postId") long postId) {
-    	
-    	long userId = 1; // FIXME: change to current user
+    public String like(@AuthenticationPrincipal User auth,
+					   @RequestParam(value = "postId") long postId) {
     	
     	Post post = postRepository.findById(postId).get();
-    	People user = peopleRepository.findById(userId).get();
+    	People user = getCurrentUser(auth);
     	Reaction reaction = reactionRepository.findByPostAndUser(post, user);
     	
     	if(reaction != null) {
