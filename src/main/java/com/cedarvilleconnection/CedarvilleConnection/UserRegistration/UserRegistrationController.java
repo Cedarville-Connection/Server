@@ -37,8 +37,7 @@ public class UserRegistrationController {
 
             String username = userRegistrationObject.getUsername();
             String password = userRegistrationObject.getPassword();
-            User user;
-            user = new User(username, "{noop}" + password, authorities);
+            User user = new User(username, "{noop}" + password, authorities);
 
             jdbcUserDetailsManager.createUser(user);
 
@@ -46,8 +45,6 @@ public class UserRegistrationController {
             People person = new People();
             peopleRepository.save(person);
 
-            com.cedarvilleconnection.CedarvilleConnection.User.User jdbcUser;
-            jdbcUser = new com.cedarvilleconnection.CedarvilleConnection.User.User();
         } catch (Exception ex) {
             return new ModelAndView("redirect:/login?regError");
         }

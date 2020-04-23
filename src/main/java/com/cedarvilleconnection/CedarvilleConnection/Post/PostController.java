@@ -20,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.cedarvilleconnection.CedarvilleConnection.Comment.Comment;
 import com.cedarvilleconnection.CedarvilleConnection.Comment.CommentRepository;
-import com.cedarvilleconnection.CedarvilleConnection.People.People;
 import com.cedarvilleconnection.CedarvilleConnection.People.PeopleRepository;
 import com.cedarvilleconnection.CedarvilleConnection.Reaction.Reaction;
 import com.cedarvilleconnection.CedarvilleConnection.Reaction.ReactionRepository;
@@ -42,7 +41,7 @@ public class PostController {
     private ReactionRepository reactionRepository;
 
     @RequestMapping(method = RequestMethod.GET)
-    public ModelAndView home() {
+    public ModelAndView index() {
     	ModelAndView mav = new ModelAndView("home");
         mav.addObject("posts", getAllPosts());
         return mav;
