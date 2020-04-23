@@ -89,13 +89,6 @@ public class People {
 
 
 	private List<Post> posts;
-//	public void addPost(Post post) {
-//		this.posts.add(post);
-//	}
-//
-//	public void removePost(Post post) {
-//		this.posts.remove(post);
-//	}
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
 	public List<Post> getPosts() {
 		return this.posts;
@@ -104,7 +97,6 @@ public class People {
 	public void setPosts(List<Post> posts) {
 		this.posts = posts;
 	}
-
 
 	@Id
 	public long getId() {

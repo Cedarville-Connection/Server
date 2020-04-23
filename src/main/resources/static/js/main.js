@@ -29,6 +29,16 @@ $(function() {
     		}
 		});
     });
+    
+    $('.shareButton').click(function() {
+    	var postid = $(this).attr("data-postId");
+    	var that = this;
+    	$.post( "/share", {"postId": postid}, function( data ) {
+    		if(data == "OK") {
+    			$(that).find(".fa").removeClass("fa-share-square-o").addClass("fa-share-square");
+    		}
+		});
+    });
 
 
 });
