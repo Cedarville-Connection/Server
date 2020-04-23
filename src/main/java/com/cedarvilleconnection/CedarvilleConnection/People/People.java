@@ -17,8 +17,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @EntityListeners(AuditingEntityListener.class)
 @NamedQuery(name = "People.findByName", query = "SELECT p FROM People p "
 		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
-@NamedQuery(name = "People.findByUsername", query = "SELECT p FROM User u, People p WHERE u.Username = ?1 " +
-	"AND u.PersonId = p.id")
+@NamedQuery(name = "People.findByUsername", query = "SELECT p FROM People p, User u WHERE u.Username = ?1 and " +
+	"u.Username = p.username")
 public class People {
 	@Column(name = "id", nullable = false)
 	private long id;
@@ -35,30 +35,30 @@ public class People {
 	private int gender;
 	private Date date;
 
+	@Column(name = "username", nullable = false)
+	private String Username;
+	public String getUsername() {
+		return Username;
+	}
+	public void setUsername(String username) {
+		Username = username;
+	}
+
 	private List<People> follower;
 //	@ManyToMany(cascade = {CascadeType.ALL})
 	@ManyToMany(fetch = FetchType.LAZY)
 	@JoinTable(name="followers", joinColumns =@JoinColumn(name="user_id"),
 			inverseJoinColumns = @JoinColumn(name ="friend_id")
 	)
-//	@JsonIdentityInfo(
-//			generator = ObjectIdGenerators.PropertyGenerator.class,
-//			property = "id"
-//
-//	)
 	public List<People> getFollower() {
 		return follower;
 	}
-
-
 	public void setFollower(List<People> follower) {
 		this.follower = follower;
 	}
-
 	public void removeFollower(People person){
 		follower.remove(person);
 	}
-
 	public void addFollower(People person){
 		follower.add(person);
 	}
