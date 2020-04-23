@@ -8,6 +8,8 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -104,17 +106,17 @@ public class PeopleController {
 
     @PostMapping("/follow")
     @ResponseBody
-    public ModelAndView follow( @RequestParam("user") long followingId){
+    public ModelAndView follow(@AuthenticationPrincipal User auth,
+                               @RequestParam("user") long followingId){
 
-        long currentUserId = 2;
+        People tempPerson = peopleRepository.findByUsername(auth.getUsername());
+        long currentUserId = tempPerson.getId();
         People user = peopleRepository.findById(currentUserId).get();
         People toFollow = peopleRepository.findById(followingId).get();
         boolean isFollowing =false;
-        People tempPerson = null;
         for (People person : toFollow.getFollower()) {
             if(currentUserId == person.getId()){
                 isFollowing = true;
-                tempPerson = person;
             }
         }
         if(isFollowing){

@@ -87,9 +87,10 @@ public class PostController {
 
     @PostMapping("/like")
     @ResponseBody
-    public String like(@RequestParam(value = "postId") long postId) {
-    	
-    	long userId = 1; // FIXME: change to current user
+    public String like(@AuthenticationPrincipal User auth,
+					   @RequestParam(value = "postId") long postId) {
+		People tempPerson = peopleRepository.findByUsername(auth.getUsername());
+    	long userId = tempPerson.getId();
     	
     	Post post = postRepository.findById(postId).get();
     	People user = peopleRepository.findById(userId).get();
