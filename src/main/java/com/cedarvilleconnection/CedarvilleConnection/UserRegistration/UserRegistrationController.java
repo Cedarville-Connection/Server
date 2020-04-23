@@ -39,11 +39,20 @@ public class UserRegistrationController {
             String password = userRegistrationObject.getPassword();
             User user = new User(username, "{noop}" + password, authorities);
 
-            jdbcUserDetailsManager.createUser(user);
+            // Retrieve the person entry based on the username
+            People newUser = new People();
+            newUser.setFirst_name(userRegistrationObject.getFirstName());
+            newUser.setLast_name(userRegistrationObject.getLastName());
+            newUser.setEmail(userRegistrationObject.getEmail());
+            newUser.setGender(userRegistrationObject.getGender());
+            newUser.setAddress(userRegistrationObject.getAddress());
+            newUser.setProfile_pic("");
+            newUser.setDate(userRegistrationObject.getDOB());
+            newUser.setUsername(userRegistrationObject.getUsername());
 
-            // Create person entry for new user
-            People person = new People();
-            peopleRepository.save(person);
+            peopleRepository.save(newUser);
+
+            jdbcUserDetailsManager.createUser(user);
 
         } catch (Exception ex) {
             return new ModelAndView("redirect:/login?regError");
