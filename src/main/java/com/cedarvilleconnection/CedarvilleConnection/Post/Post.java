@@ -14,6 +14,7 @@ import com.cedarvilleconnection.CedarvilleConnection.Comment.Comment;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.cedarvilleconnection.CedarvilleConnection.People.People;
+import com.cedarvilleconnection.CedarvilleConnection.Reaction.Reaction;
 
 @Entity
 @Table(name = "post")
@@ -32,7 +33,7 @@ public class Post {
     
 	public void setTimestamp(Timestamp timestamp) {
 		try {
-			this.pt = new PrettyTime(getESTDate()).format(timestamp);
+			this.pt = new PrettyTime(ESTDate()).format(timestamp);
 		} catch(Exception e) {
 		}
 		this.timestamp = timestamp;
@@ -44,8 +45,7 @@ public class Post {
 	}
 
 	@Transient
-	public Date getESTDate() {
-		// FIXME: not working correctly
+	public static Date ESTDate() {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
 		f.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
 		try {
@@ -86,6 +86,18 @@ public class Post {
 	}
 	public void setComments(List<Comment> comments) {
 		this.comments = comments;
+	}
+	
+	
+	
+	private List<Reaction> reactions;
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "post")
+//	@OneToMany(cascade = CascadeType.ALL, mappedBy = "post")
+	public List<Reaction> getReactions() {
+		return reactions;
+	}
+	public void setReactions(List<Reaction> reactions) {
+		this.reactions = reactions;
 	}
 
 

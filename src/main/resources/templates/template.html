@@ -103,8 +103,10 @@
 	                    <div class="flex justify-center items-center p-2 text-secondaryText font-bold text-sm select-none">
 	                        <div class="mx-12 flex items-center cursor-pointer">
 	                        	<span>203</span>
-	                            <i class="fa fa-thumbs-o-up ml-1 mr-2" aria-hidden="true"></i>
-								<span>Like</span>
+	                        	<span class="likeButton" th:attr="data-postId=${post.id}">
+	                            	<i class="fa fa-thumbs-o-up ml-1 mr-2" aria-hidden="true"></i>
+									<span>Like</span>
+								</span>
 	                        </div>
 							<div class="commentButton flex items-center cursor-pointer">
 	                            <i class="fa fa-commenting-o mr-2" aria-hidden="true"></i>

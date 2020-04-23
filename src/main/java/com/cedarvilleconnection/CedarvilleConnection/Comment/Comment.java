@@ -80,7 +80,7 @@ public class Comment {
 	public void setTimestamp(Timestamp timestamp) {
 		
 		try {
-			this.pt = new PrettyTime(getESTDate()).format(timestamp);
+			this.pt = new PrettyTime(ESTDate()).format(timestamp);
 		} catch(Exception e) {
 		}
 		this.timestamp = timestamp;
@@ -92,8 +92,7 @@ public class Comment {
 	}
 	
 	@Transient
-	public Date getESTDate() {
-		// FIXME: not working correctly
+	public static Date ESTDate() {
 		SimpleDateFormat f = new SimpleDateFormat("yyyy-MMM-dd HH:mm:ss");
 		f.setTimeZone(TimeZone.getTimeZone("US/Eastern"));
 		try {
