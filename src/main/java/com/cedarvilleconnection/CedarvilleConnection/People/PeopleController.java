@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
-import com.cedarvilleconnection.CedarvilleConnection.Post.PostRepository;
+import com.cedarvilleconnection.CedarvilleConnection.Reaction.Reaction;
 
 @RestController
 @RequestMapping("/")
@@ -58,8 +58,8 @@ public class PeopleController {
         People user = peopleRepository.findById(userId).get();
         List<Post> posts = user.getPosts();
 
-        People tempPerson = getCurrentUser(auth);
-        long currentId = tempPerson.getId();
+        People currentUser = getCurrentUser(auth);
+        long currentId = currentUser.getId();
 
         boolean isFollowing = false;
         for(People person: user.getFollower()){
@@ -67,6 +67,15 @@ public class PeopleController {
                 isFollowing = true;
             }
         }
+        
+        for(Post post : posts) {
+    		for(Reaction react : post.getReactions()) {
+    			if(react.getUserId() == currentUser.getId()) {
+    				post.setUserHasLiked();
+    				break;
+    			}
+    		}
+    	}
         
         mav.addObject("posts", posts);
         mav.addObject("user", user);
