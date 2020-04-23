@@ -19,12 +19,15 @@ import com.cedarvilleconnection.CedarvilleConnection.Reaction.Reaction;
 @Entity
 @Table(name = "post")
 @EntityListeners(AuditingEntityListener.class)
-public class Post {
+public class Post implements Comparable<Post> {
 
     private long id;
     private String content;
     private Timestamp timestamp;
     private String pt;
+    
+    @Transient
+    private boolean currentUserLiked = false;
 
     @Column(name = "timestamp")
     public Timestamp getTimestamp() {
@@ -102,12 +105,10 @@ public class Post {
 	
 	@Transient
 	public boolean getUserLiked() {
-		for(Reaction r : reactions) {
-			if(r.getUserId() == (long) 1) { // FIXME: change to current user
-				return true;
-			}
-		}
-		return false;
+		return currentUserLiked;
+	}
+	public void setUserHasLiked() {
+		this.currentUserLiked = true;
 	}
 	
 	@Transient
@@ -138,6 +139,11 @@ public class Post {
 
     public void setContent(String content){
         this.content = content;
+    }
+    
+    @Override
+    public int compareTo(Post u) {
+      return getId() > u.getId() ? 1 : 2;
     }
 
 
