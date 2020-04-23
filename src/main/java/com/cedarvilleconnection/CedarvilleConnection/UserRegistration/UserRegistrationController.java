@@ -47,7 +47,7 @@ public class UserRegistrationController {
             peopleRepository.save(person);
 
             com.cedarvilleconnection.CedarvilleConnection.User.User jdbcUser;
-            jdbcUser = new com.cedarvilleconnection.CedarvilleConnection.User.User()
+            jdbcUser = new com.cedarvilleconnection.CedarvilleConnection.User.User();
         } catch (Exception ex) {
             return new ModelAndView("redirect:/login?regError");
         }
