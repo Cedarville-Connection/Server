@@ -234,7 +234,7 @@ CREATE TABLE `users` (
 
 INSERT INTO `users` (`id`, `person_id`, `username`, `password`, `enabled`) VALUES
 (1, NULL, 'user', '{noop}test', 1),
-(2, NULL, 'admin', '{noop}admin', 1),
+(2, NULL, 'admin', '{noop}Password1!', 1),
 (3, 1, 'noneel', '{noop}test', 1),
 (4, 2, 'nolander', '{noop}password', 1),
 (5, 3, 'Tom Lowry', '{noop}password', 1);

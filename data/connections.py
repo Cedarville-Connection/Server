@@ -22,7 +22,7 @@ def export_to_mysql(db, table, username, password, values):
     cur = None
     try:
         logging.info("Connecting to local MySQL instance")
-        conn = mysql.connector.connect(host="163.11.237.201", user=username, passwd=password, db=db)
+        conn = mysql.connector.connect(host="185.212.70.205", user=username, passwd=password, db=db)
 
         cur = conn.cursor()
 

@@ -11,6 +11,7 @@ import javax.persistence.*;
 
 import com.cedarvilleconnection.CedarvilleConnection.Comment.Comment;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.ocpsoft.prettytime.PrettyTime;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.cedarvilleconnection.CedarvilleConnection.People.People;
@@ -21,7 +22,12 @@ import com.cedarvilleconnection.CedarvilleConnection.Reaction.Reaction;
 @EntityListeners(AuditingEntityListener.class)
 public class Post {
 
+	@Id
+	@GenericGenerator(name="gen",strategy="increment")
+	@GeneratedValue(generator="gen")
+	@Column(name = "ID", unique = true, nullable = false, precision = 15, scale = 0)
     private long id;
+
     private String content;
     private Timestamp timestamp;
     private String pt;
@@ -62,7 +68,7 @@ public class Post {
 
 	private People user;
     @ManyToOne
-    @JoinColumn(foreignKey=@ForeignKey(name="user_id"))
+    @JoinColumn(foreignKey=@ForeignKey(name="post_user_id"))
     public People getUser() {
         return user;
     }

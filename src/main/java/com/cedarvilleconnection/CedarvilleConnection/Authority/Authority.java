@@ -1,5 +1,6 @@
 package com.cedarvilleconnection.CedarvilleConnection.Authority;
 
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
@@ -12,6 +13,9 @@ import java.io.Serializable;
 @NamedQuery(name = "Authority.findByUsername", query = "SELECT authority FROM Authority WHERE username = ?1")
 public class Authority implements Serializable {
     @Id
+    @GenericGenerator(name="gen",strategy="increment")
+    @GeneratedValue(generator="gen")
+    @Column(name = "ID", unique = true, nullable = false, precision = 15, scale = 0)
     int id;
 
     @Column(name = "username", nullable = false)

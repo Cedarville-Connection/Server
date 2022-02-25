@@ -2,12 +2,14 @@ package com.cedarvilleconnection.CedarvilleConnection.User;
 
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "users")
@@ -15,7 +17,13 @@ import java.util.List;
 @NamedQuery(name = "User.findByUsername", query = "SELECT u from User u WHERE u.Username = ?1")
 public class User {
 	@Id
+	@GenericGenerator(name="gen",strategy="increment")
+	@GeneratedValue(generator="gen")
+	@Column(name = "ID", unique = true, nullable = false, precision = 15, scale = 0)
 	private long id;
+	public long getId() {return id;	}
+	public void setId(long id) {this.id = id;}
+
 
 	@Column(name = "username", nullable = false)
 	private String Username;
@@ -43,6 +51,8 @@ public class User {
 	public void setEnabled(boolean enabled) {
 		Enabled = enabled;
 	}
+
+
 }
 
 

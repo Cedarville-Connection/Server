@@ -2,10 +2,12 @@ package com.cedarvilleconnection.CedarvilleConnection.People;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.persistence.*;
 
 import com.fasterxml.jackson.annotation.*;
+import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.NamedQuery;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 import com.cedarvilleconnection.CedarvilleConnection.Post.Post;
@@ -19,7 +21,10 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 		+ "WHERE CONCAT(LOWER(p.first_name), ' ', LOWER(p.last_name)) like CONCAT('%', LOWER(?1), '%')")
 @NamedQuery(name = "People.findByUsername", query = "SELECT p FROM People p WHERE p.username = ?1")
 public class People {
-	@Column(name = "id", nullable = false)
+	@Id
+	@GenericGenerator(name="gen",strategy="increment")
+	@GeneratedValue(generator="gen")
+	@Column(name = "ID", unique = true, nullable = false, precision = 15, scale = 0)
 	private long id;
 
 	@Column(name = "first_name", nullable = false)
