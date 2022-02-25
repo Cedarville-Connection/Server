@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+			xmlns:sec="http://www.thymeleaf.org/extras/spring-security">>
+
+	<head th:fragment="header">
+		<meta charset="UTF-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta http-equiv="X-UA-Compatible" content="ie=edge">
+		
+		<!-- <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link rel="stylesheet" href="css/tailwind.css">
+		<link rel="stylesheet" href="css/style.css">
+		
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script src="js/main.js"></script> -->
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link th:href="@{/css/tailwind.css}" rel="stylesheet"/>
+		<link th:href="@{/css/style.css}" rel="stylesheet"/>
+		
+		<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+		<script th:src="@{/js/main.js}"></script>
+		
+        <title>Cedarville Connection</title>
+	</head>
+	
+	<nav th:fragment="navbar" class="bg-secondary h-15 w-full">
+    		<div class="h-15 flex flex-row mx-auto my-auto lg:w-2/3 items-center justify-between">
+    			<form action="/search" method="POST" class="lg:w-1/2 flex flex-row">
+    				<a href="/" class="mx-2 flex items-center text-ternaryText">
+    					<img class="h-8" th:src="@{/images/logo.png}"/>
+    				</a>
+    				<div class="rounded flex flex-row flex-1 p-1 my-auto">
+	    				<input type="text" name="userName" placeholder="Search" class="rounded-full pl-4 flex-1 focus:outline-none"/>
+	    				<button type="submit" class="bg-primary ml-2 w-16 flex justify-center focus:outline-none rounded-full">
+	    					<svg class="h-4 w-4 fill-current" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" id="Capa_1" x="0px" y="0px" viewBox="0 0 56.966 56.966" style="enable-background:new 0 0 56.966 56.966;" xml:space="preserve" width="512px" height="512px">
+						      <path d="M55.146,51.887L41.588,37.786c3.486-4.144,5.396-9.358,5.396-14.786c0-12.682-10.318-23-23-23s-23,10.318-23,23  s10.318,23,23,23c4.761,0,9.298-1.436,13.177-4.162l13.661,14.208c0.571,0.593,1.339,0.92,2.162,0.92  c0.779,0,1.518-0.297,2.079-0.837C56.255,54.982,56.293,53.08,55.146,51.887z M23.984,6c9.374,0,17,7.626,17,17s-7.626,17-17,17  s-17-7.626-17-17S14.61,6,23.984,6z"/>
+						    </svg>
+	    				</button>
+    				</div>
+    			</form>
+    			<div class="flex flex-row flex-1 justify-end text-ternaryText text-sm select-none">
+    				<div class="flex flex-row">
+    					<a th:href="@{/people/{id}(id=${currentUser.id})}" class="pr-4 border-r border-gray-700 cursor-pointer flex flex-row items-center">
+    						<img th:src="${currentUser.profile_pic}" class="mr-2 w-4 rounded-full"/>
+    						<span class="text-sm"><span th:text="${currentUser.first_name}"></span> <span th:text="${currentUser.last_name}"></span></span>
+    					</a>
+    				</div>
+    				<div class="flex flex-row pr-4">
+    					<a href="/" class="px-4 border-r border-gray-700">
+    						<span>Home</span>
+    					</a>
+    				</div>
+					<div class="flex flex-row pr-4">
+    					<span class="pr-4 border-r border-gray-700">
+    						<a href="#" class="pr-2"><i class="fa fa-lg fa-users" aria-hidden="true"></i></a>
+    						<a href="#" class="pr-2"><i class="fa fa-lg fa-comments" aria-hidden="true"></i></a>
+    						<a href="#"><i class="fa fa-lg fa-bell" aria-hidden="true"></i></a>
+    					</span>
+    				</div>
+    				<div class="flex flex-row pr-4">
+    					<a href="#" class="pr-4"><i class="fa fa-lg fa-question" aria-hidden="true"></i></a>
+    					<div class="flex justify-center">
+    						<div class="dropdown inline-block relative">
+							    <button class="font-semibold px-2 rounded inline-flex items-center">
+							      <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20"><path d="M9.293 12.95l.707.707L15.657 8l-1.414-1.414L10 10.828 5.757 6.586 4.343 8z"/> </svg>
+							    </button>
+							    <ul class="dropdown-menu absolute hidden text-gray-700 pt-1">
+										<li class=""><form th:action="@{/logout}" method="post"><button type="submit" class="rounded-t rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap">Sign Out</button></form></li>
+							      <!-- <li class=""><a class="bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">?</a></li>
+							      <li class=""><a class="rounded-b bg-gray-200 hover:bg-gray-400 py-2 px-4 block whitespace-no-wrap" href="#">?</a></li> -->
+							    </ul>
+						  	</div>
+						</div>
+    				</div>
+    			</div>
+    		</div>
+    	</nav>
+    	
+    	
+    	
+    	
+    	
+    	
+    	
+    	<div th:fragment="posts" th:each="post : ${posts}" class="my-4 bg-white shadow-xl rounded-lg overflow-hidden">
+	                    <div class="p-4 pb-0 flex w-full items-center">
+	                    	<img th:src="${post.user.profile_pic}" class="mr-4 w-12 rounded-full"/>
+	                    	<a th:href="@{/people/{id}(id=${post.user.id})}" class="flex flex-col">
+								<span class="text-xl text-gray-900"><span th:text="${post.user.first_name}">First</span> <span th:text="${post.user.last_name}">Last</span></span>
+								<span class="text-secondaryText text-xs" th:text="${post.prettyTime}">8 minutes ago</span>
+							</a>
+	                    </div>
+	                    <div class="p-4 pt-0 flex flex-wrap break-words w-full">
+	                    	<p class="text-sm" th:text="${post.content}">Post Content</p>
+	                    </div>
+	                    <div class="h-1 w-11/12 border-t border-gray-300 mx-auto"></div>
+	                    <div class="flex justify-center items-center p-2 text-secondaryText font-bold text-sm select-none">
+	                        <div class="mx-12 flex items-center cursor-pointer">
+	                        	<span class="likeButton" th:attr="data-postId=${post.id}">
+	                        		<span class="amountOfLikes" th:text="${post.amountOfLikes}">0</span>
+	                            	<i th:classappend="${post.userLiked} ? fa-thumbs-up : fa-thumbs-o-up" class="fa ml-1 mr-2" aria-hidden="true"></i>
+									<span>Like</span>
+								</span>
+	                        </div>
+							<div class="commentButton flex items-center cursor-pointer">
+	                            <i class="fa fa-commenting-o mr-2" aria-hidden="true"></i>
+								<span>Comments</span>
+	                        </div>
+							<div class="mx-12 flex items-center cursor-pointer">
+								<span class="shareButton" th:attr="data-postId=${post.id}">
+	                            	<i class="fa fa-share-square-o mr-2" aria-hidden="true"></i>
+									<span>Share</span>
+								</span>
+	                        </div>
+	                    </div>
+	                    <div class="commentBox">
+	                    	<div class="commentList flex flex-col">
+		                    	<div th:each="comment : ${post.comments}" class="px-4 py-2">
+			                    	<a th:href="@{/people/{id}(id=${comment.user.id})}" class="flex w-full items-center">
+				                    	<img th:src="${comment.user.profile_pic}" class="mr-4 w-12 rounded-full"/>
+				                    	<span class="text-sm text-gray-900 font-bold">
+				                    		<span th:text="${comment.user.first_name}">First</span> <span th:text="${comment.user.last_name}">Last</span>
+				                    		<span class="text-secondaryText font-normal" th:text="${comment.prettyTime}">8 minutes ago</span>
+				                    	</span>
+			                    	</a>
+				                    <div class="flex flex-wrap break-words w-full">
+				                    	<p th:text="${comment.contents}" class="text-sm">Comment Content</p>
+				                    </div>
+		                    	</div>
+	                    	</div>
+	                    	
+	                    	<div>
+	                    		<form method="POST" action="/comment" class="p-2">
+	                    			<div class="flex flex-row flex-1 p-1 my-auto">
+					    				<textarea type="text" name="comment" placeholder="Comment Text" class="flex-1 focus:outline-none"></textarea>
+				    				</div>
+				    				<input th:name="postId" th:value="${post.id}" hidden/>
+				    				<button type="submit" class="rounded bg-primary w-full py-1 flex justify-center focus:outline-none">Comment</button>
+	                    		</form>
+	                    	</div>
+	                    </div>
+	                </div>
+	                
+	                
+</html>

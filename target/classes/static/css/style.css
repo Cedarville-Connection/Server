@@ -1,0 +1,129 @@
+.theme-light {
+    --bg-background-primary: #e9ebee;
+    --bg-background-secondary: #31B7E6;
+    --bg-background-ternary: #F3A00F;
+
+    --bg-primary-complement: #0AB568;
+    --bg-primary-chromatic: #14588F;
+
+    --text-copy-primary: rgb(29, 29, 29);
+    --text-copy-secondary: rgb(145, 145, 145);
+    --text-copy-ternary: white;
+
+}
+.theme-dark {
+    --bg-background-primary: #071e3d;
+    --bg-background-secondary: #1d4d77;
+    --bg-background-ternary: #278ea5;
+
+    --bg-primary-complement: #2AF598;
+    --bg-primary-chromatic: #278ea5;
+
+    --text-copy-primary: #cbd5e0;
+    --text-copy-secondary: white;
+    --text-copy-ternary: #fff;
+}
+
+
+html, body, body > div#body-wrapper {
+	height: 100%;
+	margin: 0;
+	padding: 0;
+	background-color: var(--bg-background-primary);
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+/* NAVBAR DROPDOWN */
+.dropdown:hover .dropdown-menu {
+  display: block;
+}
+
+
+
+.commentBox {
+    max-height: 0px;
+    -webkit-transition: max-height, 0.5s ease-in-out;
+    -moz-transition: max-height, 0.5s ease-in-out;
+    -ms-transition: max-height, 0.5s ease-in-out;
+    -o-transition: max-height, 0.5s ease-in-out;
+    transition: max-height, 0.5s ease-in-out;
+}
+.commentBox.open {
+	max-height: 800px;
+}
+.commentBox textarea {
+	max-height: 200px;
+	min-height: 30px;
+}
+.commentBox .commentList {
+	max-height: 500px;
+	overflow-y: scroll;
+}
+
+
+
+/** Currently not being used! **/
+/** Example HTML **/
+
+/* <div class="overlay-wrapper pr-4 border-r border-gray-700 cursor-pointer">
+	<span>IMG</span>
+    <span>NAME</span>
+    <div class="overlay cursor-default">
+		<span class="cancel"></span>
+		<div class="popup">
+			<h2 class="text-center text-lg font-bold">What the what?</h2>
+				<div class="content">
+					<p>Click outside the popup to close.</p>
+				</div>
+		/div>
+	</div>
+  </div> 
+*/
+/* OVERLAY 
+.overlay {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+  	left: 0;
+  	right: 0;
+  	background: rgba(0,0,0,0.5);
+	opacity: 0;
+	visibility: hidden;
+	transition: opacity 200ms;
+}
+.overlay .cancel {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: default;
+}
+.popup {
+	margin: 75px auto;
+	padding: 20px;
+	width: auto;
+	box-shadow: 0 0 50px rgba(0,0,0,0.5);
+	position: relative;
+  	max-width: 50%;
+  	max-height: 50%;
+}
+.popup .content {
+    overflow: auto;
+}
+.popup .close {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 20px;
+    right: 20px;
+    opacity: 0.8;
+    transition: all 200ms;
+    font-size: 24px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #666;
+}
+.popup .close:hover {
+	opacity: 1;
+}*/
+
+
