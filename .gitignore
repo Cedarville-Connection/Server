@@ -51,6 +51,9 @@ local.properties
 .loadpath
 .recommenders
 
+# Target or generated files for build
+target/
+
 # External tool builders
 .externalToolBuilders/
 
